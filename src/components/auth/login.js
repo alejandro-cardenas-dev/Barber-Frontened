@@ -1,5 +1,4 @@
 'use client'
-
 import { useAuthContext } from "@/context/authContext"
 import { useState } from "react"
 
@@ -7,35 +6,33 @@ export default function Login () {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const { login } = useAuthContext()
-
+  const [errorMessage, SetErrorMessage] = useState('')
 
   const handleSubmit = async (e) => {
     console.log('before');
     console.log('email', email);
     console.log('password', password);
-
-
-
     e.preventDefault()
 
     try {
       const success = await login(email, password)
+      const data = await success.json()
       console.log('successs:', success);
 
-      if (success) {
+      if (success.ok) {
         console.log('login success');
 
       } else {
-        console.log('error doing login');
-
+        const error = Object.values(data).find(data => Array.isArray(data))?.[0]
+        SetErrorMessage(error)
+        console.log('error doing login', errorMessage);
       }
 
-    } catch (error) {
+    } catch {
+      const error = 'This account does not exist'
+      SetErrorMessage(error)
       console.log('errorrrrrrrrr:', error);
-
     }
-
-
   }
 
   return (
@@ -43,6 +40,7 @@ export default function Login () {
       <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center border border-mainColorText p-6 gap-y-3" >
         <h2 className="text-3xl font-bold" >LOGIN</h2>
 
+        <p>{errorMessage}</p>
         <div className="flex flex-col" >
           <label>Email</label>
           <input
