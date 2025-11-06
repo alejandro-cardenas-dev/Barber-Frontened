@@ -3,11 +3,11 @@ import API from "@/API/api"
 import { useAuthContext } from "@/context/authContext"
 import { useEffect, useState } from "react"
 import BarbersSchedules from "./barbersSchedules"
+import Image from "next/image"
 
 export default function Barbers () {
   const [barbersData, setBarbersData] = useState([])
   const { token } = useAuthContext()
-
 
   useEffect(() => {
     const get_barbers = async () => {
@@ -19,15 +19,10 @@ export default function Barbers () {
         }
       })
       const data = await res.json()
-      console.log('dataaaaaaaa', data);
-
       setBarbersData(data)
     }
     get_barbers()
   }, [token])
-
-  console.log('after', barbersData);
-
 
   return (
     <div className="flex flex-col items-center gap-y-5" >
@@ -42,6 +37,15 @@ export default function Barbers () {
                   <p className="text-3xl" >
                     {barber.user.first_name} {barber.user.last_name}
                   </p>
+
+                  <div className="mask-b-from-20% mask-b-to-100%" >
+                    <Image
+                      src='/barber3.png'
+                      alt='barber photo'
+                      width={200}
+                      height={200}
+                      />
+                  </div>
 
                   <div className="flex flex-col justify-center items-center" >
                     <span>{barber.user.phone}</span>
