@@ -6,6 +6,7 @@ import { useState } from "react"
 export default function BarbersSchedules ({ barber_id }) {
   const [appointmentDate, setAppointmentDate] = useState('')
   const [barberSchedules, setBarberSchedules] = useState([])
+  const [errorMessage, SetErrorMessage] = useState('')
   const { token } = useAuthContext()
 
 
@@ -22,12 +23,11 @@ export default function BarbersSchedules ({ barber_id }) {
     }, [barberSchedules])
 
     const data = await res.json()
-    console.log('data', data);
 
-    if (res.ok) {
-      console.log('data:', data);
+    if (!data.error) {
       setBarberSchedules(data.available_times)
     } else {
+      SetErrorMessage(data.error)
       console.log('error:', data);
     }
   }
@@ -67,7 +67,7 @@ export default function BarbersSchedules ({ barber_id }) {
             }
             <span onClick={() => setBarberSchedules([])}>Close</span>
           </div>
-        : null
+        : <span>{errorMessage}</span>
       }
     </div>
   )
