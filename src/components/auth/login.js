@@ -1,5 +1,6 @@
 'use client'
 import { useAuthContext } from "@/context/authContext"
+import Link from "next/link"
 import { useState } from "react"
 
 export default function Login () {
@@ -36,7 +37,7 @@ export default function Login () {
   }
 
   return (
-    <div className="flex justify-center" >
+    <div className="flex flex-col justify-center items-center" >
       <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center border border-mainColorText p-6 gap-y-3" >
         <h2 className="text-3xl font-bold" >LOGIN</h2>
 
@@ -69,6 +70,8 @@ export default function Login () {
           LOGIN
         </button>
       </form>
+
+      <Link href='/create-account/' >Create account</Link>
     </div>
   )
 }
