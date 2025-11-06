@@ -7,8 +7,7 @@ export const API = {
 
   CREATE_APPOINTMENT: `${API_BASE_URL}/create-appointment/`,
   DELETE_APPOINTMENT: `${API_BASE_URL}/delete-appointment/`,
-  GET_CUSTOMER_APPOINTMENTS: `${API_BASE_URL}/get-customer/appointments/`,
-  GET_BARBER_APPOINTMENTS: `${API_BASE_URL}/get-barber-appointments/`,
+  GET_APPOINTMENTS: `${API_BASE_URL}/get-appointments/`,
 
   GET_BARBERS: `${API_BASE_URL}/get-barbers/`,
   GET_BARBERS_AVAILABLE_TIMES_SPECIFIC_DATE: `${API_BASE_URL}/get-barber/`,
