@@ -1,13 +1,52 @@
-import Link from "next/link";
+'use client'
 
-export default function Header () {
+import Link from 'next/link'
+import Image from 'next/image'
+import { usePathname } from 'next/navigation'
+
+export default function Header() {
+  const pathname = usePathname()
+
   return (
-    <header className="flex justify-between p-3" >
-      <Link href='/' >
-        <span>Alejo's Barber</span>
-      </Link>
-      <Link href='/create-appointment/'>CREATE appointment</Link>
-      <Link href='/appointments/'>GET appointmens</Link>
+    <header>
+      <div className="relative h-[450px] w-full flex flex-col justify-center items-center mask-b-from-20% mask-b-to-90%">
+        <Image
+          src="/barbershop.png"
+          alt="Barber shop"
+          fill
+          className="object-cover -z-10"
+        />
+        <h1 className="text-5xl font-black ml-5">ALEJO'S BARBER</h1>
+      </div>
+
+      <div className="flex justify-center items-center bg-neutral-800 p-1 mx-4 rounded-xl">
+        <Link
+          href="/"
+          className={`flex justify-center w-full p-1 rounded-lg ${
+            pathname === '/' ? 'bg-black text-white' : 'hover:bg-neutral-700'
+          }`}
+        >
+          Barbers
+        </Link>
+
+        <Link
+          href="/create-appointment/"
+          className={`flex justify-center w-full p-1 rounded-lg ${
+            pathname === '/create-appointment' ? 'bg-black text-white' : 'hover:bg-neutral-700'
+          }`}
+        >
+          Create Appointment
+        </Link>
+
+        <Link
+          href="/appointments/"
+          className={`flex justify-center w-full p-1 rounded-lg ${
+            pathname === '/appointments' ? 'bg-black text-white' : 'hover:bg-neutral-700'
+          }`}
+        >
+          Get Appointments
+        </Link>
+      </div>
     </header>
   )
 }
