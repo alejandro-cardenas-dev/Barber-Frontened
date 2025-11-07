@@ -1,28 +1,11 @@
 'use client'
-import API from "@/API/api"
-import { useAuthContext } from "@/context/authContext"
-import { useEffect, useState } from "react"
+
 import BarbersSchedules from "./barbersSchedules"
 import Image from "next/image"
+import { useBarberContext } from "@/context/barberContext"
 
 export default function Barbers () {
-  const [barbersData, setBarbersData] = useState([])
-  const { token } = useAuthContext()
-
-  useEffect(() => {
-    const get_barbers = async () => {
-      const res = await fetch(API.GET_BARBERS, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        }
-      })
-      const data = await res.json()
-      setBarbersData(data)
-    }
-    get_barbers()
-  }, [token])
+  const { barbersData } = useBarberContext()
 
   return (
     <div className="flex flex-col items-center gap-y-5" >
