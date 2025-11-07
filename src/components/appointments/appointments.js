@@ -49,7 +49,7 @@ export default function Appointments () {
                   <p>Barber: {appointment.barber.user.first_name} {appointment.barber.user.last_name}</p>
                 </div>
 
-                <DeleteAppointment appointment_id={appointment.id} />
+                <DeleteAppointment appointment_id={appointment.id} setAllAppointmets={setAllAppointmets} />
 
               </div>
             )
