@@ -1,74 +1,101 @@
 'use client'
-import API from "@/API/api"
-import { useAuthContext } from "@/context/authContext"
-import { useState } from "react"
 
-export default function BarbersSchedules ({ barber_id }) {
-  const [appointmentDate, setAppointmentDate] = useState('')
+import { useState, useEffect } from 'react'
+import API from '@/API/api'
+import { useAuthContext } from '@/context/authContext'
+import { useBarberContext } from '@/context/barberContext'
+
+export default function BarbersSchedules() {
   const [barberSchedules, setBarberSchedules] = useState([])
-  const [errorMessage, SetErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
+
+  const {
+    barberToCreateAppointment,
+    timeToCreateAppointment,
+    setTimeToCreateAppointment,
+    dateToCreateAppointment,
+    setDateToCreateAppointment
+  } = useBarberContext()
+
   const { token } = useAuthContext()
 
+  useEffect(() => {
+    const fetchBarberSchedules = async () => {
+      if (!dateToCreateAppointment || !barberToCreateAppointment) return
 
-  const handleBarberSchedule = async (e) => {
-    console.log('appointment data:', appointmentDate);
+      try {
+        const res = await fetch(
+          `${API.GET_BARBERS_AVAILABLE_TIMES_SPECIFIC_DATE}${barberToCreateAppointment}/available-times/?date=${dateToCreateAppointment}`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+            }
+          }
+        )
 
-    e.preventDefault()
-    const res = await fetch(`${API.GET_BARBERS_AVAILABLE_TIMES_SPECIFIC_DATE}${barber_id}/available-times/?date=${appointmentDate}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        const data = await res.json()
+
+        if (!data.error) {
+          setBarberSchedules(data.available_times)
+          setErrorMessage('')
+        } else {
+          setErrorMessage(data.error)
+          setBarberSchedules([])
+        }
+      } catch (error) {
+        console.error('Error fetching schedules:', error)
+        setErrorMessage('Error fetching schedules.')
       }
-    }, [barberSchedules])
-
-    const data = await res.json()
-
-    if (!data.error) {
-      setBarberSchedules(data.available_times)
-    } else {
-      SetErrorMessage(data.error)
-      console.log('error:', data);
     }
-  }
+
+    fetchBarberSchedules()
+  }, [dateToCreateAppointment, barberToCreateAppointment, token])
 
   return (
-    <div>
-      <form onSubmit={handleBarberSchedule} >
-        <span>Get Barber Available Time</span>
-        <div>
+<div className="flex flex-col gap-y-5 w-80">
+  <input
+    className="border border-mainColorText py-1 rounded-sm"
+    type="date"
+    value={dateToCreateAppointment}
+    onChange={(e) => setDateToCreateAppointment(e.target.value)}
+    required
+  />
 
-        <label>Date</label>
-          <input
-            className="border border-mainColorText p-1.5 rounded-sm"
-            type="date"
-            value={appointmentDate}
-            onChange={(e) => setAppointmentDate(e.target.value)}
-            required
-          />
-        </div>
-
-        <button type="submit" >
-          Get Barber Schedules
+  {barberSchedules.length > 0 ? (
+    <div
+      className="
+        flex flex-wrap
+        justify-between
+        gap-y-2
+      "
+    >
+      {barberSchedules.map((hour, index) => (
+        <button
+          key={index}
+          onClick={() => setTimeToCreateAppointment(hour)}
+          className={`
+            border border-mainColor
+            py-1
+            rounded-md
+            text-sm
+            flex-1
+            basis-[30%]
+            text-center
+            transition
+            hover:bg-white hover:text-black
+            ${timeToCreateAppointment === hour ? 'bg-white text-black font-semibold border-black' : ''}
+          `}
+        >
+          {hour}
         </button>
-      </form>
-
-      {
-        barberSchedules.length > 0 ?
-          <div>
-            {
-              barberSchedules.map((hour, index) => {
-                return (
-                  <p key={index} >
-                    {hour}
-                  </p>
-                )
-              })
-            }
-            <span onClick={() => setBarberSchedules([])}>Close</span>
-          </div>
-        : <span>{errorMessage}</span>
-      }
+      ))}
     </div>
+  ) : (
+    <span className="text-red-500">{errorMessage}</span>
+  )}
+</div>
+
   )
 }

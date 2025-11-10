@@ -3,9 +3,10 @@
 import BarbersSchedules from "./barbersSchedules"
 import Image from "next/image"
 import { useBarberContext } from "@/context/barberContext"
+import Link from "next/link"
 
 export default function Barbers () {
-  const { barbersData } = useBarberContext()
+  const { barbersData, setBarberToCreateAppointment } = useBarberContext()
 
   return (
     <div className="flex flex-col items-center gap-y-5" >
@@ -35,19 +36,7 @@ export default function Barbers () {
                     <span>{barber.user.email}</span>
                   </div>
 
-                  <div>
-                    <span>Work Schedule:</span>
-                    <p>Monday - Saturday</p>
-                    <p>
-                      {barber.work_start_time} - {barber.lunch_start_time}
-                    </p>
-
-                    <p>
-                      {barber.lunch_end_time} - {barber.work_end_time}
-                    </p>
-                  </div>
-
-                  < BarbersSchedules barber_id={barber.id} />
+                  <Link href='/create-appointment/' onClick={() => setBarberToCreateAppointment(barber.id)} >Create Appointment</Link>
                 </div>
               )
             })

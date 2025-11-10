@@ -8,6 +8,9 @@ const BarberContext = createContext()
 
 export function BarberProvider ({ children }) {
     const [barbersData, setBarbersData] = useState([])
+    const [barberToCreateAppointment, setBarberToCreateAppointment] = useState('')
+    const [dateToCreateAppointment, setDateToCreateAppointment] = useState('')
+    const [timeToCreateAppointment, setTimeToCreateAppointment] = useState('')
     const { token } = useAuthContext()
 
     const getBarbers = useCallback(async () => {
@@ -38,7 +41,7 @@ export function BarberProvider ({ children }) {
 
 
   return (
-    <BarberContext.Provider value={{ barbersData, getBarbers }} >
+    <BarberContext.Provider value={{ barbersData, getBarbers, barberToCreateAppointment, setBarberToCreateAppointment, timeToCreateAppointment, setTimeToCreateAppointment, dateToCreateAppointment, setDateToCreateAppointment }} >
       { children }
     </BarberContext.Provider>
   )

@@ -2,28 +2,25 @@
 
 import API from "@/API/api"
 import { useAuthContext } from "@/context/authContext"
+import { useBarberContext } from "@/context/barberContext"
 import { useState } from "react"
+import BarberDetail from "../barbers/barberDetail"
+import BarbersSchedules from "../barbers/barbersSchedules"
 
 export default function CreateAppointmen () {
   const [message, SetMessage] = useState('')
-  const [barber, setBarber] = useState('')
-  const [appointmentDate, setAppointmentDate] = useState('')
-  const [appointmentTime, setAppointmentTime] = useState('')
+  const { timeToCreateAppointment, barberToCreateAppointment, dateToCreateAppointment  } = useBarberContext()
   const { token } = useAuthContext()
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log('tokennnn', token);
-    console.log('before::::');
-
+    console.log('appoint:', barberToCreateAppointment, timeToCreateAppointment, dateToCreateAppointment);
 
     const formData = new FormData()
-    formData.append('barber', barber)
+    formData.append('barber', barberToCreateAppointment)
     formData.append('customer', token)
-    formData.append('appointment_date', appointmentDate)
-    formData.append('appointment_start_time', appointmentTime)
+    formData.append('appointment_date', dateToCreateAppointment)
+    formData.append('appointment_start_time', timeToCreateAppointment)
 
     const res = await fetch(API.CREATE_APPOINTMENT, {
       method: 'POST',
@@ -46,53 +43,18 @@ export default function CreateAppointmen () {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center border border-mainColorText p-6 gap-y-3" >
-        <h2 className="text-3xl font-bold" >CREATE ACCOUNT</h2>
+    <div className="flex justify-center gap-x-20" >
+      <span>{message}</span>
 
-        <p>{message}</p>
-        <div className="flex flex-col" >
+      <BarberDetail />
 
-        <label>Barber</label>
-          <input
-            className="border border-mainColorText p-1.5 rounded-sm"
-            type="number"
-            placeholder="barber"
-            value={barber}
-            onChange={(e) => setBarber(e.target.value)}
-            required
-          />
+      <div className="flex flex-col gap-5" >
+        <BarbersSchedules />
+
+        <div className="flex justify-end" >
+          <button onClick={handleSubmit} className={`flex justify-center items-center w-[104px] rounded-md ${timeToCreateAppointment ? 'bg-white text-black' : ''}`} >Create</button>
         </div>
-
-        <div className="flex flex-col" >
-
-        <label>Appointment Date</label>
-          <input
-            className="border border-mainColorText p-1.5 rounded-sm"
-            type="date"
-            value={appointmentDate}
-            onChange={(e) => setAppointmentDate(e.target.value)}
-            required
-          />
-        </div>
-
-        <div className="flex flex-col" >
-
-        <label>Appointment Time</label>
-          <input
-            className="border border-mainColorText p-1.5 rounded-sm"
-            type="text"
-            placeholder="Time"
-            value={appointmentTime}
-            onChange={(e) => setAppointmentTime(e.target.value)}
-            required
-          />
-        </div>
-
-        <button type="submit" className="bg-[#cea36f99] p-2 text-black w-full" >
-          CREATE APPOINTMEN
-        </button>
-      </form>
+      </div>
     </div>
   )
 }

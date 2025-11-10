@@ -23,19 +23,10 @@ export default function Header() {
         <Link
           href="/"
           className={`flex justify-center w-full p-1 rounded-lg ${
-            pathname === '/' ? 'bg-black text-white' : 'hover:bg-neutral-700'
+            pathname === '/' || pathname === '/create-appointment' ? 'bg-black text-white' : 'hover:bg-neutral-700'
           }`}
         >
           Barbers
-        </Link>
-
-        <Link
-          href="/create-appointment/"
-          className={`flex justify-center w-full p-1 rounded-lg ${
-            pathname === '/create-appointment' ? 'bg-black text-white' : 'hover:bg-neutral-700'
-          }`}
-        >
-          Create Appointment
         </Link>
 
         <Link
