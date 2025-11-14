@@ -7,32 +7,20 @@ export default function Login () {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const { login } = useAuthContext()
-  const [errorMessage, SetErrorMessage] = useState('')
+  const [message, SetMessage] = useState('')
 
   const handleSubmit = async (e) => {
     console.log('before');
     console.log('email', email);
     console.log('password', password);
     e.preventDefault()
+    const success = await login(email, password)
+    console.log('successs:', success);
 
-    try {
-      const success = await login(email, password)
-      console.log('successs:', success);
-
-      if (success.ok) {
-        console.log('login success');
-
-      } else {
-        const data = await success.json()
-        const error = Object.values(data).find(data => Array.isArray(data))?.[0]
-        SetErrorMessage(error)
-        console.log('error doing login', errorMessage);
-      }
-
-    } catch {
-      const error = 'This account does not exist'
-      SetErrorMessage(error)
-      // console.log('errorrrrrrrrr:', error);
+    if (success) {
+      SetMessage('Login successful')
+    } else {
+      SetMessage('Password does not match or account does not exist')
     }
   }
 
@@ -49,8 +37,12 @@ export default function Login () {
       >
         <h2 className="text-3xl font-extrabold text-white text-center mb-2">LOGIN</h2>
 
-        {errorMessage && (
-          <p className="text-red-500 text-sm text-center">{errorMessage}</p>
+        {message && (
+          <p className={`text-sm text-center
+            ${message.includes('successful') ? 'text-green-700': 'text-red-600'}`}
+          >
+            {message}
+          </p>
         )}
 
         <div className="flex flex-col gap-1">
