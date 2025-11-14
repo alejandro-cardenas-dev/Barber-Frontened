@@ -50,118 +50,163 @@ export default function CreateAccount () {
   }
 
   return (
-    <div className="flex justify-center" >
-      <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center border border-mainColorText p-6 gap-y-3" >
-        <h2 className="text-3xl font-bold" >CREATE ACCOUNT</h2>
+    <div className="flex justify-center items-center min-h-screen bg-neutral-900/90 p-6">
+      <form
+        onSubmit={handleSubmit}
+        className="
+          flex flex-col w-80 bg-neutral-900/95 border border-neutral-800/50
+          rounded-3xl p-8 gap-5 shadow-[0_10px_40px_rgba(0,0,0,0.35)]
+          backdrop-blur-xl transition-all duration-300
+          hover:shadow-[0_15px_50px_rgba(0,0,0,0.45)]
+        "
+      >
+        <h2 className="text-3xl font-extrabold text-white text-center mb-2">CREATE ACCOUNT</h2>
 
-        <p>{errorMessage}</p>
-        <div className="flex flex-col" >
+        {errorMessage && (
+          <p className="text-red-500 text-sm text-center">{errorMessage}</p>
+        )}
 
-        <label>Email</label>
+        <div className="flex flex-col gap-1">
+          <label className="text-neutral-200 text-sm font-medium">First Name</label>
           <input
-            className="border border-mainColorText p-1.5 rounded-sm"
+            type="text"
+            placeholder="first name"
+            value={first_name}
+            onChange={(e) => setFirst_name(e.target.value)}
+            required
+            className="
+              px-4 py-2 rounded-xl border border-neutral-700/50 bg-neutral-800/60
+              text-white text-sm placeholder-neutral-400
+              focus:outline-none focus:ring-2 focus:ring-white/50
+              transition-all duration-200
+            "
+          />
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <label className="text-neutral-200 text-sm font-medium">Last Name</label>
+          <input
+            type="text"
+            placeholder="last name"
+            value={last_name}
+            onChange={(e) => setLast_name(e.target.value)}
+            required
+            className="
+              px-4 py-2 rounded-xl border border-neutral-700/50 bg-neutral-800/60
+              text-white text-sm placeholder-neutral-400
+              focus:outline-none focus:ring-2 focus:ring-white/50
+              transition-all duration-200
+            "
+          />
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <label className="text-neutral-200 text-sm font-medium">Email</label>
+          <input
             type="email"
             placeholder="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            className="
+              px-4 py-2 rounded-xl border border-neutral-700/50 bg-neutral-800/60
+              text-white text-sm placeholder-neutral-400
+              focus:outline-none focus:ring-2 focus:ring-white/50
+              transition-all duration-200
+            "
           />
         </div>
 
-        <div className="flex flex-col" >
-
-        <label>First Name</label>
+        <div className="flex flex-col gap-1">
+          <label className="text-neutral-200 text-sm font-medium">Phone</label>
           <input
-            className="border border-mainColorText p-1.5 rounded-sm"
-            type="text"
-            placeholder="first_name"
-            value={first_name}
-            onChange={(e) => setFirst_name(e.target.value)}
-            required
-          />
-        </div>
-
-        <div className="flex flex-col" >
-
-        <label>Last Name</label>
-          <input
-            className="border border-mainColorText p-1.5 rounded-sm"
-            type="text"
-            placeholder="last_name"
-            value={last_name}
-            onChange={(e) => setLast_name(e.target.value)}
-            required
-          />
-        </div>
-
-        <div className="flex flex-col" >
-
-        <label>Phone</label>
-          <input
-            className="border border-mainColorText p-1.5 rounded-sm"
             type="phone"
             placeholder="phone"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             required
+            className="
+              px-4 py-2 rounded-xl border border-neutral-700/50 bg-neutral-800/60
+              text-white text-sm placeholder-neutral-400
+              focus:outline-none focus:ring-2 focus:ring-white/50
+              transition-all duration-200
+            "
           />
         </div>
 
-        <div className="flex flex-col" >
-
-        <label>Password</label>
+        <div className="flex flex-col gap-1">
+          <label className="text-neutral-200 text-sm font-medium">Password</label>
           <input
-            className="border border-mainColorText p-1.5 rounded-sm"
             type="password"
             placeholder="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            className="
+              px-4 py-2 rounded-xl border border-neutral-700/50 bg-neutral-800/60
+              text-white text-sm placeholder-neutral-400
+              focus:outline-none focus:ring-2 focus:ring-white/50
+              transition-all duration-200
+            "
           />
         </div>
 
-        <div className="flex flex-col" >
-
-        <label>Password Confirmation</label>
+        <div className="flex flex-col gap-1">
+          <label className="text-neutral-200 text-sm font-medium">Confirm Password</label>
           <input
-            className="border border-mainColorText p-1.5 rounded-sm"
             type="password"
-            placeholder="password 2"
+            placeholder="confirm password"
             value={password2}
             onChange={(e) => setPassword2(e.target.value)}
             required
+            className="
+              px-4 py-2 rounded-xl border border-neutral-700/50 bg-neutral-800/60
+              text-white text-sm placeholder-neutral-400
+              focus:outline-none focus:ring-2 focus:ring-white/50
+              transition-all duration-200
+            "
           />
         </div>
 
-        <div className="flex justify-between" >
-          <label>
-          <input
-            type="radio"
-            name="role"
-            checked={is_barber}
-            onChange={() => {
-              setIs_barber(true)
-              setIs_customer(false)
-            }}
-          />
+        <div className="flex justify-around mt-2 mb-4">
+          <label className="flex items-center gap-2 text-neutral-200 text-sm font-medium cursor-pointer">
+            <input
+              type="radio"
+              name="role"
+              checked={is_barber}
+              onChange={() => {
+                setIs_barber(true);
+                setIs_customer(false);
+              }}
+              className="accent-white"
+            />
             Barber
           </label>
 
-          <label>
+          <label className="flex items-center gap-2 text-neutral-200 text-sm font-medium cursor-pointer">
             <input
               type="radio"
               name="role"
               checked={is_customer}
               onChange={() => {
-                setIs_customer(true)
-                setIs_barber(false)
+                setIs_customer(true);
+                setIs_barber(false);
               }}
-              />
+              className="accent-white"
+            />
             Customer
           </label>
         </div>
 
-        <button type="submit" className="bg-[#cea36f99] p-2 text-black w-full" >
+        <button
+          type="submit"
+          className="
+            w-full py-2 rounded-2xl bg-white text-black font-semibold
+            shadow-[0_4px_12px_rgba(0,0,0,0.25)]
+            hover:shadow-[0_6px_15px_rgba(0,0,0,0.35)]
+            transition-all duration-300
+          "
+        >
           SIGN UP
         </button>
       </form>
