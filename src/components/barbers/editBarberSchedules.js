@@ -113,9 +113,9 @@ export default function EditBarberSchedules () {
           <button
             type="button"
             onClick={() => {
-              setWorkStart('09:00');
-              setWorkEnd('18:00');
-              setLunchStart('13:00');
+              setWorkStart('10:00');
+              setWorkEnd('16:00');
+              setLunchStart('12:00');
               setLunchEnd('14:00');
             }}
             className="flex-1 py-2 rounded-2xl bg-neutral-700 text-white font-semibold shadow-[0_2px_10px_rgba(0,0,0,0.25)] hover:bg-neutral-800 transition-all duration-200"
