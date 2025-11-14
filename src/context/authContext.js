@@ -35,7 +35,7 @@ export function AuthProvider ({ children }) {
         const dataBarber = await resBarber.json()
         setUser(dataBarber)
         console.log('barber user successsssssss', dataBarber);
-        router.push('/edit-schedules/')
+        router.push('/appointments')
         return
       }
       console.log('Error fetching barber data')
@@ -66,6 +66,13 @@ export function AuthProvider ({ children }) {
     }
   }
 
+  const logout = () => {
+    setUser(null)
+    setToken(null)
+    localStorage.removeItem('token')
+    router.push('/login')
+  }
+
   useEffect(() => {
     const savedToken = localStorage.getItem("token");
 
@@ -87,7 +94,7 @@ export function AuthProvider ({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ token, login, user }}>
+    <AuthContext.Provider value={{ token, login, user, logout }}>
       { children }
     </AuthContext.Provider >
   )
