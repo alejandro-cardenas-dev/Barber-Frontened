@@ -43,18 +43,33 @@ export default function CreateAppointmen () {
   }
 
   return (
-    <div className="flex justify-center gap-x-20" >
-      <span>{message}</span>
+    <div className="flex flex-col lg:flex-row justify-center items-start gap-12 py-10">
+
+      {message && <span className="text-white text-lg font-semibold">{message}</span>}
 
       <BarberDetail />
 
-      <div className="flex flex-col gap-5" >
+      <div className="flex flex-col gap-6">
+
         <BarbersSchedules />
 
-        <div className="flex justify-end" >
-          <button onClick={handleSubmit} className={`flex justify-center items-center w-[104px] rounded-md ${timeToCreateAppointment ? 'bg-white text-black' : ''}`} >Create</button>
+        <div className="flex justify-end">
+          <button
+            onClick={handleSubmit}
+            disabled={!timeToCreateAppointment}
+            className={`
+              w-[120px] py-2 rounded-2xl font-semibold transition-all duration-200
+              ${timeToCreateAppointment
+                ? 'bg-white text-black shadow-[0_4px_12px_rgba(0,0,0,0.25)] hover:shadow-[0_6px_15px_rgba(0,0,0,0.35)]'
+                : 'bg-neutral-700 text-neutral-400 cursor-not-allowed'}
+            `}
+          >
+            Create
+          </button>
         </div>
+
       </div>
+
     </div>
   )
 }
