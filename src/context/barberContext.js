@@ -11,10 +11,10 @@ export function BarberProvider ({ children }) {
     const [barberToCreateAppointment, setBarberToCreateAppointment] = useState('')
     const [dateToCreateAppointment, setDateToCreateAppointment] = useState('')
     const [timeToCreateAppointment, setTimeToCreateAppointment] = useState('')
-    const { token } = useAuthContext()
+    const { token, user } = useAuthContext()
 
     const getBarbers = useCallback(async () => {
-      if (!token) return
+      if (!token || !user || !user.is_customer) return
 
       try {
         const res = await fetch(API.GET_BARBERS, {
@@ -29,10 +29,10 @@ export function BarberProvider ({ children }) {
         const data = await res.json()
         setBarbersData(data)
       } catch (error) {
-        console.error('error', error.message);
+        console.error('errorcitooooo', error.message);
 
       }
-    }, [token])
+    }, [token, user])
 
 
     useEffect(() => {
