@@ -51,7 +51,7 @@ export default function BarbersSchedules() {
     }
 
     fetchBarberSchedules()
-  }, [dateToCreateAppointment, barberToCreateAppointment, token])
+  }, [barberSchedules, dateToCreateAppointment, barberToCreateAppointment, token])
 
   return (
     <div className="flex flex-col gap-6 w-80 bg-neutral-900/95 rounded-3xl p-6 shadow-[0_10px_40px_rgba(0,0,0,0.35)] backdrop-blur-xl transition-all duration-300">
@@ -87,10 +87,11 @@ export default function BarbersSchedules() {
             </button>
           ))}
         </div>
-      ) : (
+      ) : errorMessage ? (
         <span className="text-red-500 text-sm mt-2">{errorMessage}</span>
+      ) : (
+        <span className="text-white text-sm mt-2">No schedules available</span>
       )}
-
     </div>
   )
 }
