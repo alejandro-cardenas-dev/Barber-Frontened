@@ -1,51 +1,65 @@
 'use client'
 import API from "@/API/api"
-import { useRouter } from "next/navigation"
 import { createContext, useContext, useEffect, useState } from "react"
 
 const AuthContext = createContext()
 
-export function AuthProvider ({ children }) {
-  const [user, setUser] = useState({})
-  const [token, setToken] = useState('')
-  const router = useRouter()
+export function AuthProvider({ children }) {
+  const [user, setUser] = useState(null)
+  const [loadingUser, setLoadingUser] = useState(true)
+  const [token, setToken] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   const fetch_user = async (access) => {
-    const res = await fetch(API.GET_USER, {
-      headers: { 'Authorization': `Bearer ${access}` }
-    })
+    try {
+      const res = await fetch(API.GET_USER, {
+        headers: { 'Authorization': `Bearer ${access}` }
+      })
 
-    if (!res.ok) {
-      console.log('error fetching userrrrrrrr');
-      return
-    }
+      if (!res.ok) {
+        setUser(null)
+        setToken(null)
+        localStorage.removeItem('token')
+        console.log('error doing fetch user');
+        return null
+      }
 
-    const userData = await res.json()
+      const userData = await res.json()
 
-    if (userData.is_barber) {
-      const resBarber = await fetch(API.EDIT_BARBER_SCHEDULE, {
-        method: 'GET',
+      if (userData.is_barber) {
+        const resBarber = await fetch(API.EDIT_BARBER_SCHEDULE, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${access}`,
-          },
+          }
         })
 
-      if (resBarber.ok) {
+        if (!resBarber.ok) {
+          setUser(null)
+          console.log('error fetchingbarber data');
+          return false
+        }
+
         const dataBarber = await resBarber.json()
         setUser(dataBarber)
-        console.log('barber user successsssssss', dataBarber);
-        router.push('/appointments')
-        return
+        console.log('login exitosooo para barbero');
+        return dataBarber
       }
-      console.log('Error fetching barber data')
-      return
-    }
 
-    else if (userData.is_customer) {
-      setUser(userData)
-      console.log('userrrr', userData);
-      router.push('/')
+      if (userData.is_customer) {
+        setUser(userData)
+        console.log('user data using state: ', userData);
+        console.log('login exitosooo para usuario');
+        setLoadingUser(false)
+        return userData
+      }
+      console.log('finall error doing user fetch ');
+      return null
+
+
+    } catch (err) {
+      console.log("Error fetching user:", err)
+      return null
     }
   }
 
@@ -56,50 +70,42 @@ export function AuthProvider ({ children }) {
       body: JSON.stringify({ email, password })
     })
 
-    if (res.ok) {
-      const data = await res.json()
-      localStorage.setItem('token', data.access)
-      setToken(data.access)
-      console.log('data access:, ', data.access);
-      await fetch_user(data.access)
-      return true
-    }
+    if (!res.ok) return false
+
+    const data = await res.json()
+    localStorage.setItem('token', data.access)
+    setToken(data.access)
+
+    await fetch_user(data.access)
+    return true
   }
 
   const logout = () => {
+    localStorage.removeItem('token')
     setUser(null)
     setToken(null)
-    localStorage.removeItem('token')
-    router.push('/login')
   }
 
   useEffect(() => {
-    const savedToken = localStorage.getItem("token");
+    const savedToken = localStorage.getItem('token')
 
-    const validateToken = async () => {
+    const validate = async () => {
       if (savedToken) {
-        setToken(savedToken);
-        try {
-          await fetch_user(savedToken)
-        } catch (err) {
-          console.error("Error validando token:", err)
-          localStorage.removeItem("token")
-          setToken(null)
-          setUser(null)
-        }
+        setToken(savedToken)
+        await fetch_user(savedToken)
       }
-    };
+      setLoading(false)
+    }
 
-    validateToken();
-  }, []);
+    validate()
+  }, [])
 
   return (
-    <AuthContext.Provider value={{ token, login, user, logout }}>
-      { children }
-    </AuthContext.Provider >
+    <AuthContext.Provider value={{ token, user, login, logout, loading, loadingUser }}>
+      {children}
+    </AuthContext.Provider>
   )
 }
-
 
 export function useAuthContext() {
   return useContext(AuthContext)

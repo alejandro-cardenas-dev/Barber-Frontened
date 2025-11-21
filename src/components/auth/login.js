@@ -8,18 +8,19 @@ export default function Login () {
   const [password, setPassword] = useState('')
   const { login } = useAuthContext()
   const [message, SetMessage] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e) => {
-    console.log('before');
-    console.log('email', email);
-    console.log('password', password);
+    setLoading(true)
     e.preventDefault()
     const success = await login(email, password)
     console.log('successs:', success);
 
     if (success) {
       SetMessage('Login successful')
+      setLoading(false)
     } else {
+      setLoading(false)
       SetMessage('Password does not match or account does not exist')
     }
   }
@@ -82,13 +83,15 @@ export default function Login () {
         <button
           type="submit"
           className="
-            mt-4 w-full py-2 rounded-2xl bg-white text-black font-semibold
-            shadow-[0_4px_12px_rgba(0,0,0,0.25)]
-            hover:shadow-[0_6px_15px_rgba(0,0,0,0.35)]
-            transition-all duration-300
-          "
+            flex justify-center items-center w-full py-2 rounded-2xl
+            bg-white text-black font-semibold cursor-pointer
+            hover:bg-neutral-300
+            "
         >
           LOGIN
+          {loading &&
+              <div className="h-4 w-4 ml-2 animate-spin rounded-full border-2 border-black border-t-transparent"></div>
+          }
         </button>
 
         <Link
