@@ -14,9 +14,11 @@ export default function CreateAccount () {
   const [is_barber, setIs_barber] = useState(false)
   const [is_customer, setIs_customer] = useState(false)
   const [errorMessage, SetErrorMessage] = useState('')
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
 
   const handleSubmit = async (e) => {
+    setLoading(true)
     e.preventDefault()
 
     const formData = new FormData()
@@ -38,13 +40,16 @@ export default function CreateAccount () {
       const data = await res.json()
 
       if (res.ok) {
+        setLoading(false)
         console.log('done', data);
-        router.push('/login/')
+        router.push('/login')
       } else {
+        setLoading(false)
         const error = Object.values(data).find(data => Array.isArray(data))?.[0]
         SetErrorMessage(error)
       }
     } catch (error) {
+      setLoading(false)
       console.error("catch error:", error);
     }
   }
@@ -201,13 +206,15 @@ export default function CreateAccount () {
         <button
           type="submit"
           className="
-            w-full py-2 rounded-2xl bg-white text-black font-semibold
-            shadow-[0_4px_12px_rgba(0,0,0,0.25)]
-            hover:shadow-[0_6px_15px_rgba(0,0,0,0.35)]
-            transition-all duration-300
-          "
+            flex justify-center items-center w-full py-2 rounded-2xl
+            bg-white text-black font-semibold cursor-pointer
+            hover:bg-neutral-300
+            "
         >
           SIGN UP
+          {loading &&
+              <div className="h-4 w-4 ml-2 animate-spin rounded-full border-2 border-black border-t-transparent"></div>
+          }
         </button>
       </form>
     </div>

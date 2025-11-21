@@ -11,7 +11,7 @@ import { FaCheckCircle } from "react-icons/fa";
 export default function CreateAppointmen () {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
-  const { timeToCreateAppointment, barberToCreateAppointment, dateToCreateAppointment  } = useBarberContext()
+  const { timeToCreateAppointment, barberToCreateAppointment, dateToCreateAppointment, realoadBarberSchedules, setReloadBarberSchedules  } = useBarberContext()
   const { token } = useAuthContext()
 
   const handleSubmit = async (e) => {
@@ -19,23 +19,25 @@ export default function CreateAppointmen () {
     setLoading(true)
     console.log('appoint:', barberToCreateAppointment, timeToCreateAppointment, dateToCreateAppointment);
 
-    const formData = new FormData()
-    formData.append('barber', barberToCreateAppointment)
-    formData.append('customer', token)
-    formData.append('appointment_date', dateToCreateAppointment)
-    formData.append('appointment_start_time', timeToCreateAppointment)
+    console.log('time to create appointment:', typeof timeToCreateAppointment);
 
     const res = await fetch(API.CREATE_APPOINTMENT, {
       method: 'POST',
       headers: {
+        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
       },
-      body: formData
+      body: JSON.stringify({
+        barber: barberToCreateAppointment,
+        appointment_date: dateToCreateAppointment,
+        appointment_start_time: timeToCreateAppointment,
+      })
     })
     const data = await res.json()
 
     if (res.ok) {
       setLoading(false)
+      setReloadBarberSchedules(!realoadBarberSchedules)
       setMessage('Appointment Created Succesfull')
       console.log('appointment created succesfull', data);
       setTimeout(() => setMessage(''), 5000)
