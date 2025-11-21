@@ -2,12 +2,17 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
+import { redirect, usePathname } from 'next/navigation'
 import { useAuthContext } from '@/context/authContext'
+import Loader from '../loader'
 
 export default function Header() {
   const pathname = usePathname()
-  const { user } = useAuthContext()
+  const { user, loadingUser } = useAuthContext()
+
+  if (loadingUser) return <Loader/>
+  if (!user) return redirect('/login')
+
 return (
   <header className="mb-12 relative">
     <div className="relative h-[430px] w-full flex flex-col justify-end items-center">
@@ -26,7 +31,7 @@ return (
     <div
       className="
         flex justify-center items-center gap-2
-        bg-neutral-900/85 mx-6 p-2 rounded-2xl
+        bg-neutral-900/85 mx-2.5 p-1.5 rounded-2xl
         shadow-[0_8px_30px_rgba(0,0,0,0.4)]
         backdrop-blur-xl border border-neutral-800
       "

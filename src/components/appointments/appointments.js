@@ -4,92 +4,102 @@ import API from "@/API/api"
 import { useAuthContext } from "@/context/authContext"
 import { useEffect, useState } from "react"
 import DeleteAppointment from "./deleteAppointment"
+import Loader from "../loader"
 
 export default function Appointments () {
   const [allAppointments, setAllAppointmets] = useState([])
+  const [loading, setLoading] = useState(true)
   const { token } = useAuthContext()
 
   useEffect(() => {
     const get_appointments = async () => {
-      const res = await fetch(API.GET_APPOINTMENTS, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
+      setLoading(true)
+
+      try {
+        const res = await fetch(API.GET_APPOINTMENTS, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          }
+        })
+
+        const data = await res.json();
+
+        if (res.ok) {
+          setAllAppointmets(data);
+        } else {
+          console.log('error', data);
         }
-      })
 
-      const data = await res.json()
-
-      if (res.ok) {
-        setAllAppointmets(data)
-        console.log('success', data);
-
-      } else {
-        console.log('error', data);
+      } catch (error) {
+        console.log("Network error:", error);
+      } finally {
+        setLoading(false)
       }
+    };
 
-
-    }
-    get_appointments()
-  }, [token])
-
+    if (token) get_appointments();
+  }, [token]);
 
   return (
     <div className="flex justify-center flex-wrap gap-10 py-10">
-      {allAppointments.length > 0 ? (
-        allAppointments.map((appointment) => {
-          return (
-            <div
-              key={appointment.id}
-              className="
-                w-96 rounded-4xl bg-neutral-900/95
-                shadow-[0_10px_40px_rgba(0,0,0,0.35)]
-                border border-neutral-800/60 backdrop-blur-xl
-                transition-all duration-300 hover:shadow-[0_15px_50px_rgba(0,0,0,0.45)]
-                hover:-translate-y-1.5
-              "
-            >
 
-              <div className="px-6 py-4 border-b border-neutral-800/40">
-                <p className="text-white font-semibold text-lg tracking-tight">
-                  {appointment.appointment_date}
+      {loading && <Loader />}
+
+      {!loading && allAppointments.length > 0 && (
+        allAppointments.map((appointment) => (
+          <div
+            key={appointment.id}
+            className="
+              w-96 rounded-4xl bg-neutral-900/95
+              shadow-[0_10px_40px_rgba(0,0,0,0.35)]
+              border border-neutral-800/60 backdrop-blur-xl
+              transition-all duration-300 hover:shadow-[0_15px_50px_rgba(0,0,0,0.45)]
+              hover:-translate-y-1.5
+            "
+          >
+
+            <div className="px-6 py-4 border-b border-neutral-800/40">
+              <p className="text-white font-semibold text-lg tracking-tight">
+                {appointment.appointment_date}
+              </p>
+            </div>
+
+            <div className="px-6 py-6 flex flex-col gap-7">
+
+              <div className="bg-black rounded-2xl py-5 shadow-inner shadow-black/40 flex items-center justify-center">
+                <span className="text-white text-4xl font-semibold tracking-tight">
+                  {appointment.appointment_start_time}
+                </span>
+              </div>
+
+              <div className="bg-neutral-100 rounded-2xl px-5 py-4 shadow-sm shadow-black/10">
+                <p className="text-neutral-900 text-[17px] font-semibold">
+                  {appointment.customer.user.first_name} {appointment.customer.user.last_name}
+                </p>
+                <p className="text-neutral-600 mt-1 text-sm font-medium">
+                  Barber: {appointment.barber.user.first_name} {appointment.barber.user.last_name}
                 </p>
               </div>
 
-              <div className="px-6 py-6 flex flex-col gap-7">
+              <div className="flex flex-col items-center gap-4 mt-4">
+                <span className="text-neutral-500 text-xs tracking-wide">
+                  © 2025 Alejo’s Barber
+                </span>
 
-                <div className="bg-black rounded-2xl py-5 shadow-inner shadow-black/40 flex items-center justify-center">
-                  <span className="text-white text-4xl font-semibold tracking-tight">
-                    {appointment.appointment_start_time}
-                  </span>
-                </div>
-
-                <div className="bg-neutral-100 rounded-2xl px-5 py-4 shadow-sm shadow-black/10">
-                  <p className="text-neutral-900 text-[17px] font-semibold">
-                    {appointment.customer.user.first_name} {appointment.customer.user.last_name}
-                  </p>
-                  <p className="text-neutral-600 mt-1 text-sm font-medium">
-                    Barber: {appointment.barber.user.first_name} {appointment.barber.user.last_name}
-                  </p>
-                </div>
-
-                <div className="flex flex-col items-center gap-4 mt-4">
-                  <span className="text-neutral-500 text-xs tracking-wide">
-                    © 2025 Alejo’s Barber
-                  </span>
-
-                  <DeleteAppointment
-                    appointment_id={appointment.id}
-                    setAllAppointmets={setAllAppointmets}
-                  />
-                </div>
-
+                <DeleteAppointment
+                  appointment_id={appointment.id}
+                  setAllAppointmets={setAllAppointmets}
+                />
               </div>
+
             </div>
-          );
-        })
-      ) : (
+          </div>
+        ))
+      )}
+
+      {!loading && allAppointments.length === 0 && (
         <div className="text-neutral-400 text-sm">
           You don't have any appointment yet
         </div>
