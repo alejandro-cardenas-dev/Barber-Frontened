@@ -8,7 +8,7 @@ import Loader from "./loader"
 const PUBLIC_ROUTES = ['/login', '/create-account']
 
 export default function ProtectedRoute({ children }) {
-  const { token, loading } = useAuthContext()
+  const { token, loading, user } = useAuthContext()
   const pathname = usePathname()
   const router = useRouter()
 
@@ -21,9 +21,19 @@ export default function ProtectedRoute({ children }) {
       router.replace('/login')
     }
 
-    if (token && isPublic) {
+    if (token && isPublic && user.is_customer) {
+      console.log('customer since protected', user);
+
       router.replace('/')
     }
+
+    if (token && isPublic && !user.is_customer) {
+      console.log('barber since protected', user);
+
+      router.replace('/appointments')
+    }
+
+
   }, [loading, token, pathname, router])
 
   if (loading) return <Loader />

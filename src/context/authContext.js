@@ -73,10 +73,10 @@ export function AuthProvider({ children }) {
     if (!res.ok) return false
 
     const data = await res.json()
+    await fetch_user(data.access)
     localStorage.setItem('token', data.access)
     setToken(data.access)
 
-    await fetch_user(data.access)
     return true
   }
 
