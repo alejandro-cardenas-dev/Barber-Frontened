@@ -3,7 +3,9 @@
 import API from "@/API/api"
 import { useAuthContext } from "@/context/authContext"
 import Image from "next/image"
-import { useEffect, useState } from "react"
+import { useState } from "react"
+import { FaCheckCircle } from "react-icons/fa";
+import { FaTimesCircle } from "react-icons/fa";
 
 export default function EditBarberSchedules () {
   const { token, user } = useAuthContext()
@@ -11,17 +13,16 @@ export default function EditBarberSchedules () {
   const [workEnd, setWorkEnd] = useState(user.work_end_time)
   const [lunchStart, setLunchStart] = useState(user.lunch_start_time)
   const [lunchEnd, setLunchEnd] = useState(user.lunch_end_time)
+  const [message, setMessage] = useState('')
 
   console.log('barber from edit:', user);
 
   const edit_schedules = async (e) => {
     e.preventDefault()
 
-    console.log('llllllllllllll');
-
     if (workStart == user.work_start_time && workEnd == user.work_end_time && lunchStart == user.lunch_start_time && lunchEnd == user.lunch_end_time ) {
       console.log('you did not change any fields');
-
+      setMessage('You did not change any fields')
       return
     }
 
@@ -41,11 +42,14 @@ export default function EditBarberSchedules () {
     })
 
     if (res.ok) {
+      setMessage('Schedules edited successfully')
       const data = await res.json()
       console.log('changes success', data );
+      setTimeout(() => setMessage(''), 3000)
     } else {
+      setMessage('An error has occurred, please try again!')
       console.log('[error');
-
+      setTimeout(() => setMessage(''), 3000)
     }
 
   }
@@ -53,6 +57,40 @@ export default function EditBarberSchedules () {
 
   return (
     <div className="flex flex-col items-center py-10 gap-8">
+
+      {message && (
+        <div className={`
+          flex items-center gap-3
+          fixed bottom-6 right-6
+          px-5 py-3
+          rounded-2xl
+          bg-gray-900 text-white
+          shadow-[0_4px_15px_rgba(0,0,0,0.5)]
+          font-semibold
+          z-50
+          animate-fadeIn
+
+          ${message.includes('successfully')
+            ? 'border border-green-500'
+            : 'border border-red-500'
+          }
+
+          `
+        }>
+          <span className={message.includes('successfully') ? 'text-lg text-green-500' : 'text-red-400'} >
+            {message.includes('successfully')
+              ? <FaCheckCircle />
+              : <FaTimesCircle />
+            }
+
+
+          </span>
+          <span>{message}</span>
+        </div>
+      )}
+
+
+
       <div className="flex flex-col items-center gap-2">
         <Image
           src="/barber3.png"
@@ -125,7 +163,7 @@ export default function EditBarberSchedules () {
 
           <button
             type="submit"
-            className="flex-1 py-2 rounded-2xl bg-white text-black font-semibold shadow-[0_2px_10px_rgba(0,0,0,0.25)] hover:shadow-[0_4px_15px_rgba(0,0,0,0.35)] transition-all duration-200"
+            className="flex-1 py-2 rounded-2xl bg-white text-black font-semibold shadow-[0_2px_10px_rgba(0,0,0,0.25)] hover:bg-neutral-300 transition-all duration-200 cursor-pointer"
           >
             Save
           </button>
