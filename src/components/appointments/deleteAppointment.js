@@ -1,7 +1,7 @@
 import API from "@/API/api";
 import { useAuthContext } from "@/context/authContext";
 
-export default function DeleteAppointment ({ appointment_id, setAllAppointmets }) {
+export default function DeleteAppointment ({ appointment_id, setAllAppointmets, setMessage }) {
     const { token } = useAuthContext()
 
     const deleteAppointment = async (appointment_id) => {
@@ -14,7 +14,9 @@ export default function DeleteAppointment ({ appointment_id, setAllAppointmets }
 
       if (res.ok){
         setAllAppointmets(prev => prev.filter(appointment => appointment.id !== appointment_id))
+        setMessage('Appointment successfully canceled')
         console.log('deleted');
+        setTimeout(() => setMessage(''), 3000)
       } else {
         console.log('error deleting');
       }

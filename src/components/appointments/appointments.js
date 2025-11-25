@@ -5,11 +5,13 @@ import { useAuthContext } from "@/context/authContext"
 import { useEffect, useState } from "react"
 import DeleteAppointment from "./deleteAppointment"
 import Loader from "../loader"
+import { FaTimesCircle } from "react-icons/fa";
 
 export default function Appointments () {
   const [allAppointments, setAllAppointmets] = useState([])
   const [loading, setLoading] = useState(true)
   const { token } = useAuthContext()
+  const [message, setMessage] = useState('')
 
   useEffect(() => {
     const get_appointments = async () => {
@@ -46,6 +48,26 @@ export default function Appointments () {
     <div className="flex justify-center flex-wrap gap-10 py-10">
 
       {loading && <Loader />}
+
+      {message && (
+        <div className="
+          flex items-center gap-3
+          fixed bottom-6 right-6
+          px-5 py-3
+          rounded-2xl
+          bg-gray-900 text-white
+          border border-red-500
+          shadow-[0_4px_15px_rgba(0,0,0,0.5)]
+          font-semibold
+          z-50
+          animate-fadeIn
+        ">
+          <span className="text-lg text-red-400">
+            <FaTimesCircle />
+          </span>
+          <span>{message}</span>
+        </div>
+      )}
 
       {!loading && allAppointments.length > 0 && (
         allAppointments.map((appointment) => (
@@ -91,6 +113,7 @@ export default function Appointments () {
                 <DeleteAppointment
                   appointment_id={appointment.id}
                   setAllAppointmets={setAllAppointmets}
+                  setMessage={setMessage}
                 />
               </div>
 
