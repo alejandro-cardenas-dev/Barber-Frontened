@@ -11,15 +11,20 @@ import { FaCheckCircle } from "react-icons/fa";
 export default function CreateAppointmen () {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
-  const { timeToCreateAppointment, barberToCreateAppointment, dateToCreateAppointment, realoadBarberSchedules, setReloadBarberSchedules  } = useBarberContext()
   const { token } = useAuthContext()
+
+  const {
+    timeToCreateAppointment,
+    barberToCreateAppointment,
+    dateToCreateAppointment,
+    reloadBarberSchedules,
+    setReloadBarberSchedules,
+    setTimeToCreateAppointment
+  } = useBarberContext()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
-    console.log('appoint:', barberToCreateAppointment, timeToCreateAppointment, dateToCreateAppointment);
-
-    console.log('time to create appointment:', typeof timeToCreateAppointment);
 
     const res = await fetch(API.CREATE_APPOINTMENT, {
       method: 'POST',
@@ -37,16 +42,16 @@ export default function CreateAppointmen () {
 
     if (res.ok) {
       setLoading(false)
-      setReloadBarberSchedules(!realoadBarberSchedules)
-      setMessage('Appointment Created Succesfull')
-      console.log('appointment created succesfull', data);
-      setTimeout(() => setMessage(''), 5000)
+      setReloadBarberSchedules(!reloadBarberSchedules)
+      setTimeout(() => setMessage(''), 3000)
+      setTimeToCreateAppointment(null)
+
     } else {
       const error = Object.values(data).find(data => Array.isArray(data))?.[0]
       setMessage(error)
-      console.log('data', data);
-      console.log('error', error);
       setLoading(false)
+      setTimeToCreateAppointment(null)
+      setTimeout(() => setMessage(''), 3000)
     }
   }
 
@@ -95,9 +100,7 @@ export default function CreateAppointmen () {
             }
           </button>
         </div>
-
       </div>
-
     </div>
   )
 }
