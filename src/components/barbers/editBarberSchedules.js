@@ -54,6 +54,12 @@ export default function EditBarberSchedules () {
 
   }
 
+  const date = new Date(user.last_update)
+  const formatDate = new Intl.DateTimeFormat('es-CO', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  }).format(date)
 
   return (
     <div className="flex flex-col items-center py-10 gap-8">
@@ -89,8 +95,6 @@ export default function EditBarberSchedules () {
         </div>
       )}
 
-
-
       <div className="flex flex-col items-center gap-2">
         <Image
           src="/barber3.png"
@@ -100,7 +104,7 @@ export default function EditBarberSchedules () {
           className="rounded-full shadow-lg shadow-black/30"
         />
         <h2 className="text-2xl font-extrabold text-white">Edit Your Work Schedule</h2>
-        <span className="text-sm text-neutral-400">Last update: 12 Nov 2025 (feature)</span>
+        <span className="text-sm text-neutral-400">Last update: {formatDate}</span>
       </div>
 
       <form
@@ -111,7 +115,7 @@ export default function EditBarberSchedules () {
           <label className="text-neutral-200 font-semibold">Work Start</label>
           <input
             type="time"
-            value={workStart}
+            value={workStart.slice(0, 5)}
             onChange={(e) => setWorkStart(e.target.value)}
             required
             className="px-4 py-2 rounded-2xl border border-neutral-700/50 bg-neutral-800/60 text-white focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-200"
@@ -120,7 +124,7 @@ export default function EditBarberSchedules () {
           <label className="text-neutral-200 font-semibold">Work End</label>
           <input
             type="time"
-            value={workEnd}
+            value={workEnd.slice(0, 5)}
             onChange={(e) => setWorkEnd(e.target.value)}
             required
             className="px-4 py-2 rounded-2xl border border-neutral-700/50 bg-neutral-800/60 text-white focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-200"
@@ -131,7 +135,7 @@ export default function EditBarberSchedules () {
           <label className="text-neutral-200 font-semibold">Lunch Start</label>
           <input
             type="time"
-            value={lunchStart}
+            value={lunchStart.slice(0, 5)}
             onChange={(e) => setLunchStart(e.target.value)}
             required
             className="px-4 py-2 rounded-2xl border border-neutral-700/50 bg-neutral-800/60 text-white focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-200"
@@ -140,7 +144,7 @@ export default function EditBarberSchedules () {
           <label className="text-neutral-200 font-semibold">Lunch End</label>
           <input
             type="time"
-            value={lunchEnd}
+            value={lunchEnd.slice(0, 5)}
             onChange={(e) => setLunchEnd(e.target.value)}
             required
             className="px-4 py-2 rounded-2xl border border-neutral-700/50 bg-neutral-800/60 text-white focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-200"
