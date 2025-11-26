@@ -1,47 +1,45 @@
 import API from "@/API/api";
 import { useAuthContext } from "@/context/authContext";
 
-export default function DeleteAppointment ({ appointment_id, setAllAppointmets, setMessage }) {
-    const { token } = useAuthContext()
+export default function DeleteAppointment ({
+    appointment_id,
+    setAllAppointmets,
+    setMessage,
+    setAppointmentToCancel,
+    setCancelAppointment
+  }) {
 
-    const deleteAppointment = async (appointment_id) => {
-      console.log(appointment_id);
+  const { token } = useAuthContext()
 
-      const res = await fetch(`${API.DELETE_APPOINTMENT}${appointment_id}/`, {
-        method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${token}` }
-      })
+  const deleteAppointment = async (appointment_id) => {
 
-      if (res.ok){
-        setAllAppointmets(prev => prev.filter(appointment => appointment.id !== appointment_id))
-        setMessage('Appointment successfully canceled')
-        console.log('deleted');
-        setTimeout(() => setMessage(''), 3000)
-      } else {
-        console.log('error deleting');
-      }
+    const res = await fetch(`${API.DELETE_APPOINTMENT}${appointment_id}/`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${token}` }
+    })
 
+    if (res.ok){
+      setAllAppointmets(prev => prev.filter(appointment => appointment.id !== appointment_id))
+      setMessage('Appointment successfully canceled')
+      setCancelAppointment(false)
+      setAppointmentToCancel(null)
+      setTimeout(() => setMessage(''), 3000)
+    } else {
+      setMessage('Error deleting, please try again!')
     }
+  }
 
-    return (
-      <button
-        onClick={() => deleteAppointment(appointment_id)}
-        className="
-          text-[13px] font-medium
-          px-5 py-2 rounded-xl
-          border border-neutral-700/50
-          text-neutral-200
-          hover:text-white
-          bg-neutral-900/60
-          hover:bg-neutral-800
-          transition-all duration-300
-          shadow-[0_2px_8px_rgba(0,0,0,0.25)]
-        "
-      >
-        Cancel Appointment
-      </button>
-    );
-
-
-
+  return (
+    <button
+      onClick={() => deleteAppointment(appointment_id)}
+      className="
+        px-4 py-2 rounded-lg text-sm
+        bg-red-600 hover:bg-red-500
+        text-white font-medium
+        transition-all shadow-md
+      "
+    >
+      Cancel Appointment
+    </button>
+  )
 }

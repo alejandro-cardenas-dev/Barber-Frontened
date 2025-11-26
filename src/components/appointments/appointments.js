@@ -3,15 +3,17 @@
 import API from "@/API/api"
 import { useAuthContext } from "@/context/authContext"
 import { useEffect, useState } from "react"
-import DeleteAppointment from "./deleteAppointment"
 import Loader from "../loader"
 import { FaTimesCircle } from "react-icons/fa";
+import DeleteConfirmation from "./deleteConfirmation"
 
 export default function Appointments () {
   const [allAppointments, setAllAppointmets] = useState([])
   const [loading, setLoading] = useState(true)
-  const { token } = useAuthContext()
   const [message, setMessage] = useState('')
+  const [cancelAppointment, setCancelAppointment] = useState(false)
+  const [appointmentToCancel, setAppointmentToCancel] = useState(null)
+  const { token } = useAuthContext()
 
   useEffect(() => {
     const get_appointments = async () => {
@@ -41,8 +43,13 @@ export default function Appointments () {
       }
     };
 
-    if (token) get_appointments();
-  }, [token]);
+    if (token) get_appointments()
+  }, [token])
+
+  const handleOpenModal = (appointment_id) => {
+    setCancelAppointment(!cancelAppointment)
+    setAppointmentToCancel(appointment_id)
+  }
 
   return (
     <div className="flex justify-center flex-wrap gap-10 py-10">
@@ -110,13 +117,24 @@ export default function Appointments () {
                   © 2025 Alejo’s Barber
                 </span>
 
-                <DeleteAppointment
-                  appointment_id={appointment.id}
-                  setAllAppointmets={setAllAppointmets}
-                  setMessage={setMessage}
-                />
-              </div>
+                <span onClick={() => handleOpenModal(appointment.id)}
 
+                  className="
+                    text-[13px] font-medium
+                    px-5 py-2 rounded-xl
+                    border border-neutral-700/50
+                    text-neutral-200
+                    hover:text-white
+                    bg-neutral-900/60
+                    hover:bg-neutral-800
+                    transition-all duration-300
+                    shadow-[0_2px_8px_rgba(0,0,0,0.25)]
+                    cursor-pointer
+                  "
+                >
+                  Cancel Appointment
+                </span>
+              </div>
             </div>
           </div>
         ))
@@ -127,6 +145,19 @@ export default function Appointments () {
           You don't have any appointment yet
         </div>
       )}
+
+
+      {cancelAppointment &&
+        <DeleteConfirmation
+          setCancelAppointment={setCancelAppointment}
+          cancelAppointment={cancelAppointment}
+          setAppointmentToCancel={setAppointmentToCancel}
+          appointment_id={appointmentToCancel}
+          setAllAppointmets={setAllAppointmets}
+          setMessage={setMessage}
+        />
+      }
+
     </div>
   )
 }
