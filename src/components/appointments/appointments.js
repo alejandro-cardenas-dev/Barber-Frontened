@@ -99,7 +99,7 @@ export default function Appointments () {
 
               <div className="bg-black rounded-2xl py-5 shadow-inner shadow-black/40 flex items-center justify-center">
                 <span className="text-white text-4xl font-semibold tracking-tight">
-                  {appointment.appointment_start_time}
+                  {appointment.appointment_start_time.slice(0, 5)}
                 </span>
               </div>
 
