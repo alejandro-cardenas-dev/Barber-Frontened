@@ -13,7 +13,7 @@ export default function CreateAccount () {
   const [password2, setPassword2] = useState('')
   const [is_barber, setIs_barber] = useState(false)
   const [is_customer, setIs_customer] = useState(false)
-  const [errorMessage, SetErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
   const [loading, setLoading] = useState(false)
   const router = useRouter()
 
@@ -45,8 +45,9 @@ export default function CreateAccount () {
         router.push('/login')
       } else {
         setLoading(false)
-        const error = Object.values(data).find(data => Array.isArray(data))?.[0]
-        SetErrorMessage(error)
+        const errorDict = Object.values(data)[0]
+        const errorValue = Object.values(errorDict)[0]
+        setErrorMessage(errorValue)
       }
     } catch (error) {
       setLoading(false)
