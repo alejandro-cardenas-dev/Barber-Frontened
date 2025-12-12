@@ -1,8 +1,8 @@
 "use client"
 
-import { useAuthContext } from "@/context/authContext"
-import { usePathname, useRouter } from "next/navigation"
 import { useEffect } from "react"
+import { usePathname, useRouter } from "next/navigation"
+import { useAuthContext } from "@/context/authContext"
 import Loader from "./loader"
 
 const PUBLIC_ROUTES = ['/login', '/create-account']

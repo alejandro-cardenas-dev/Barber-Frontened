@@ -1,12 +1,12 @@
 'use client'
 
+import { useState } from "react"
+import { FaCheckCircle } from "react-icons/fa";
 import API from "@/API/api"
 import { useAuthContext } from "@/context/authContext"
 import { useBarberContext } from "@/context/barberContext"
-import { useState } from "react"
 import BarberDetail from "../barbers/barberDetail"
 import BarbersSchedules from "../barbers/barbersSchedules"
-import { FaCheckCircle } from "react-icons/fa";
 
 export default function CreateAppointmen () {
   const [loading, setLoading] = useState(false)

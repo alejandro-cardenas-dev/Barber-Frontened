@@ -1,6 +1,7 @@
 'use client'
-import API from "@/API/api"
+
 import { createContext, useContext, useEffect, useState } from "react"
+import API from "@/API/api"
 
 const AuthContext = createContext()
 

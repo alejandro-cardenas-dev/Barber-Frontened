@@ -1,8 +1,8 @@
 'use client'
 
 import { createContext, useCallback, useContext, useEffect, useState } from "react"
-import { useAuthContext } from "./authContext"
 import API from "@/API/api"
+import { useAuthContext } from "./authContext"
 
 const BarberContext = createContext()
 

@@ -1,11 +1,11 @@
 'use client'
 
+import { useEffect, useState } from "react"
+import { FaTimesCircle } from "react-icons/fa";
 import API from "@/API/api"
 import { useAuthContext } from "@/context/authContext"
-import { useEffect, useState } from "react"
-import Loader from "../loader"
-import { FaTimesCircle } from "react-icons/fa";
 import DeleteConfirmation from "./deleteConfirmation"
+import Loader from "../loader"
 
 export default function Appointments () {
   const [allAppointments, setAllAppointmets] = useState([])

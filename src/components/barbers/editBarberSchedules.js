@@ -1,11 +1,11 @@
 'use client'
 
-import API from "@/API/api"
-import { useAuthContext } from "@/context/authContext"
-import Image from "next/image"
 import { useState } from "react"
+import Image from "next/image"
 import { FaCheckCircle } from "react-icons/fa";
 import { FaTimesCircle } from "react-icons/fa";
+import API from "@/API/api"
+import { useAuthContext } from "@/context/authContext"
 
 export default function EditBarberSchedules () {
   const { token, user } = useAuthContext()

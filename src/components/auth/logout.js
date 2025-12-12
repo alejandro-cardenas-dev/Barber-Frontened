@@ -1,7 +1,7 @@
 'use client'
 
-import { useAuthContext } from "@/context/authContext"
 import Link from "next/link"
+import { useAuthContext } from "@/context/authContext"
 
 export default function Logout () {
   const { logout } = useAuthContext()

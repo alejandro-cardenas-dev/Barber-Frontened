@@ -1,8 +1,8 @@
 'use client'
 
-import API from "@/API/api"
-import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
+import API from "@/API/api"
 
 export default function CreateAccount () {
   const [email, setEmail] = useState('')

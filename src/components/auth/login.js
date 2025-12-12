@@ -1,7 +1,8 @@
 'use client'
-import { useAuthContext } from "@/context/authContext"
-import Link from "next/link"
+
 import { useState } from "react"
+import Link from "next/link"
+import { useAuthContext } from "@/context/authContext"
 
 export default function Login () {
   const [email, setEmail] = useState('')
