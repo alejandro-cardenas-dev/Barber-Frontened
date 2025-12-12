@@ -15,7 +15,12 @@ export default function Barbers () {
         BARBERS
       </span>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div
+        className={`
+          grid gap-8
+          ${barbersData.length === 1 ? "grid-cols-1 place-items-center" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"}
+        `}
+      >
 
         {barbersData.length > 0 ? (
           barbersData.map((barber) => (
@@ -61,7 +66,7 @@ export default function Barbers () {
 
               <Link
                 href="/create-appointment/"
-                onClick={() => setBarberToCreateAppointment(barber.id)}
+                onClick={() => setBarberToCreateAppointment(barber)}
                 className="
                   w-full text-center px-5 py-2.5
                   rounded-xl bg-neutral-800/60 text-neutral-200 font-medium

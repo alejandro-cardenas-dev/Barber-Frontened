@@ -25,7 +25,7 @@ export default function BarbersSchedules() {
 
       try {
         const res = await fetch(
-          `${API.GET_BARBERS_AVAILABLE_TIMES_SPECIFIC_DATE}${barberToCreateAppointment}/available-times/?date=${dateToCreateAppointment}`,
+          `${API.GET_BARBERS_AVAILABLE_TIMES_SPECIFIC_DATE}${barberToCreateAppointment.id}/available-times/?date=${dateToCreateAppointment}`,
           {
             method: 'GET',
             headers: {
