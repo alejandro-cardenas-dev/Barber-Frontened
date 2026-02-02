@@ -3,6 +3,8 @@ import ProtectedRoute from "@/components/protectedRout";
 import { AuthProvider } from "@/context/authContext";
 import { BarberProvider } from "@/context/barberContext";
 import "./globals.css";
+import { ServiceProvider } from "@/context/servicesContext";
+import { CreateAppointmentProvider } from "@/context/createAppointmentContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,7 +30,11 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           <ProtectedRoute>
             <BarberProvider>
-              {children}
+              <ServiceProvider>
+                <CreateAppointmentProvider>
+                  {children}
+                </CreateAppointmentProvider>
+              </ServiceProvider>
             </BarberProvider>
           </ProtectedRoute>
         </AuthProvider>

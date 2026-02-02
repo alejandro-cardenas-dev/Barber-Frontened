@@ -8,31 +8,21 @@ const BarberContext = createContext()
 
 export function BarberProvider ({ children }) {
     const [barbersData, setBarbersData] = useState([])
-    const [barberToCreateAppointment, setBarberToCreateAppointment] = useState('')
-    const [dateToCreateAppointment, setDateToCreateAppointment] = useState('')
-    const [timeToCreateAppointment, setTimeToCreateAppointment] = useState('')
-    const [reloadBarberSchedules, setReloadBarberSchedules] = useState(false)
     const { token, user } = useAuthContext()
 
     const getBarbers = useCallback(async () => {
       if (!token || !user || !user.is_customer) return
 
-      try {
-        const res = await fetch(API.GET_BARBERS, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
-          }
-        })
+      const res = await fetch(API.GET_BARBERS, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        }
+      })
 
-        if (!res.ok) throw new Error(`Error ${res.status}`)
+      const data = await res.json()
+      setBarbersData(data)
 
-        const data = await res.json()
-        setBarbersData(data)
-      } catch (error) {
-        console.error('errorcitooooo', error.message);
-
-      }
     }, [token, user])
 
 
@@ -46,14 +36,6 @@ export function BarberProvider ({ children }) {
       value={{
         barbersData,
         getBarbers,
-        barberToCreateAppointment,
-        setBarberToCreateAppointment,
-        timeToCreateAppointment,
-        setTimeToCreateAppointment,
-        dateToCreateAppointment,
-        setDateToCreateAppointment,
-        reloadBarberSchedules,
-        setReloadBarberSchedules
       }}
     >
       { children }

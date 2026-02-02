@@ -24,7 +24,7 @@ export default function ProtectedRoute({ children }) {
     if (token && isPublic && user.is_customer) {
       console.log('customer since protected', user);
 
-      router.replace('/')
+      router.replace('/services')
     }
 
     if (token && isPublic && !user.is_customer) {

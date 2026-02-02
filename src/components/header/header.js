@@ -45,18 +45,34 @@ export default function Header() {
         "
       >
         {user?.is_customer && (
-          <Link
-            href="/"
-            aria-current={isActive('') ? 'page' : undefined}
-            className={`w-full px-4 py-2 rounded-xl text-center font-medium text-sm transition
-              ${
-                isActive('') || isActive('/create-appointment')
+          <>
+            <Link
+              href="/services"
+              aria-current={isActive('/services') ? 'page' : undefined}
+              className={`w-full px-4 py-2 rounded-xl text-center font-medium text-sm transition
+                ${
+                  isActive('/services')
+                    ? 'bg-white text-black shadow-inner shadow-black/20'
+                    : 'text-neutral-300 hover:bg-neutral-800/50'
+                }`}
+            >
+              Services
+            </Link>
+
+
+            <Link
+              href="/barbers"
+              aria-current={isActive('/barbers') ? 'page' : undefined}
+              className={`w-full px-4 py-2 rounded-xl text-center font-medium text-sm transition
+                ${
+                  isActive('/barbers') || isActive('/create-appointment')
                   ? 'bg-white text-black shadow-inner shadow-black/20'
                   : 'text-neutral-300 hover:bg-neutral-800/50'
-              }`}
-          >
-            Barbers
-          </Link>
+                  }`}
+                  >
+              Barbers
+            </Link>
+          </>
         )}
 
         <Link

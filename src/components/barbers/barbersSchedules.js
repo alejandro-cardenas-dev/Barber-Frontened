@@ -3,20 +3,18 @@
 import { useState, useEffect } from 'react'
 import API from '@/API/api'
 import { useAuthContext } from '@/context/authContext'
-import { useBarberContext } from '@/context/barberContext'
+import { useCreateAppointmentContext } from '@/context/createAppointmentContext'
 
 export default function BarbersSchedules() {
   const [barberSchedules, setBarberSchedules] = useState([])
   const [errorMessage, setErrorMessage] = useState('')
-
   const {
     barberToCreateAppointment,
-    timeToCreateAppointment,
-    setTimeToCreateAppointment,
     dateToCreateAppointment,
     setDateToCreateAppointment,
-    reloadBarberSchedules
-  } = useBarberContext()
+    timeToCreateAppointment,
+    setTimeToCreateAppointment,
+  } = useCreateAppointmentContext()
 
   const { token } = useAuthContext()
   useEffect(() => {
@@ -51,7 +49,7 @@ export default function BarbersSchedules() {
     }
 
     fetchBarberSchedules()
-  }, [reloadBarberSchedules, dateToCreateAppointment, barberToCreateAppointment, token])
+  }, [timeToCreateAppointment, dateToCreateAppointment, barberToCreateAppointment, token])
 
   return (
     <div className="flex flex-col gap-6 w-80 bg-neutral-900/95 rounded-3xl p-6 shadow-[0_10px_40px_rgba(0,0,0,0.35)] backdrop-blur-xl transition-all duration-300">

@@ -1,19 +1,18 @@
 import { useState } from "react"
 import API from "@/API/api"
 import { useAuthContext } from "@/context/authContext"
-import { useBarberContext } from "@/context/barberContext"
+import { useCreateAppointmentContext } from "@/context/createAppointmentContext"
 
 export default function CreateConfirmation({ setCreateAppointment, setMessage }) {
   const [loading, setLoading] = useState(false)
   const { token } = useAuthContext()
   const {
-    timeToCreateAppointment,
     barberToCreateAppointment,
     dateToCreateAppointment,
-    reloadBarberSchedules,
-    setReloadBarberSchedules,
-    setTimeToCreateAppointment
-  } = useBarberContext()
+    timeToCreateAppointment,
+    setTimeToCreateAppointment,
+    serviceToCreateAppointment,
+  } = useCreateAppointmentContext()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -26,6 +25,7 @@ export default function CreateConfirmation({ setCreateAppointment, setMessage })
         'Authorization': `Bearer ${token}`,
       },
       body: JSON.stringify({
+        service: serviceToCreateAppointment.id,
         barber: barberToCreateAppointment.id,
         appointment_date: dateToCreateAppointment,
         appointment_start_time: timeToCreateAppointment,
@@ -36,7 +36,6 @@ export default function CreateConfirmation({ setCreateAppointment, setMessage })
     if (res.ok) {
       setLoading(false)
       setMessage('Appointment successfully created')
-      setReloadBarberSchedules(!reloadBarberSchedules)
       setTimeToCreateAppointment(null)
       setCreateAppointment(false)
       setTimeout(() => setMessage(''), 3000)
@@ -91,6 +90,13 @@ export default function CreateConfirmation({ setCreateAppointment, setMessage })
                 {`${barberToCreateAppointment.user.first_name} ` || "Not selected"}
 
                 {barberToCreateAppointment.user.last_name  || "Not selected"}
+              </span>
+            </div>
+
+            <div className="flex justify-between">
+              <span>Service:</span>
+              <span className="font-medium text-white">
+                {`${serviceToCreateAppointment.name} ` || "Not selected"}
               </span>
             </div>
 
