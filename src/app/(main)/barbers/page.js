@@ -1,7 +1,7 @@
-import Barbers from "@/components/barbers/barbers";
+import BarbersContainer from "@/features/barbers/containers/barberContainer";
 
-export default function BarbersVew () {
+export default function Page () {
   return (
-    <Barbers />
+    <BarbersContainer />
   );
 }
