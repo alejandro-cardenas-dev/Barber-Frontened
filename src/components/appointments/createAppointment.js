@@ -11,6 +11,7 @@ import Image from "next/image";
 import { useState } from "react";
 import CreateConfirmation from "@/components/appointments/createConfirmation";
 import { useCreateAppointmentContext } from "@/context/createAppointmentContext";
+import BarberScheduleContainer from "@/features/schedules/containers/barberScheduleContainer";
 
 export default function CreateAppointment () {
   const [serviceModal, SetServiceModal] = useState(false)
@@ -160,7 +161,7 @@ export default function CreateAppointment () {
 
           {dateModal && (
             <div className="flex justify-center mt-4 p-2 rounded-xl">
-              <BarbersSchedules />
+              <BarberScheduleContainer />
             </div>
           )}
         </section>
