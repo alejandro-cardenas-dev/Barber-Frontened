@@ -1,9 +1,9 @@
-import Appointments from "@/components/appointments/appointments";
+import AppointmentContainer from "@/features/appointments/containers/appointmentContainer";
 
-export default function AppointmentsView () {
+export default function Page () {
   return (
     <>
-      <Appointments />
+      <AppointmentContainer />
     </>
   )
 }
