@@ -1,4 +1,4 @@
-export default function AppointmentCard({ appointment }) {
+export default function AppointmentCard({ appointment, setAppointmentToCancel }) {
   return (
     <div
       className="
@@ -39,7 +39,7 @@ export default function AppointmentCard({ appointment }) {
             © 2025 Alejo’s Barber
           </span>
 
-          {/* <span
+          <span
             onClick={() => setAppointmentToCancel(appointment.id)}
             className="
               text-[13px] font-medium
@@ -55,7 +55,7 @@ export default function AppointmentCard({ appointment }) {
             "
           >
             Cancel Appointment
-          </span> */}
+          </span>
         </div>
       </div>
     </div>

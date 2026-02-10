@@ -1,17 +1,11 @@
-import DeleteAppointment from "./deleteAppointment";
+import DeleteAppointmentButton from "./deleteAppointmentButton";
 
-export default function DeleteConfirmation ({
-    appointment_id,
-    setAllAppointmets,
+export default function DeleteConfirmation({
+    appointmentId,
+    setAppointmentToCancel,
+    setAppointments,
     setMessage,
-    setCancelAppointment,
-    setAppointmentToCancel
   }) {
-
-  const handleCloseModal = () => {
-    setCancelAppointment(false)
-    setAppointmentToCancel(null)
-  }
 
   return (
     <div className="
@@ -35,22 +29,20 @@ export default function DeleteConfirmation ({
 
 
         <div className="flex justify-end gap-4">
-          <button onClick={() => handleCloseModal()}
-
+          <button onClick={() => setAppointmentToCancel(null)}
               className="
               px-4 py-2 rounded-lg text-sm
               bg-neutral-700 hover:bg-neutral-600
-              transition-all
+              transition-all cursor-pointer
             "
           >
               No
           </button>
 
-          <DeleteAppointment
-            setCancelAppointment={setCancelAppointment}
+          <DeleteAppointmentButton
+            appointmentId={appointmentId}
             setAppointmentToCancel={setAppointmentToCancel}
-            appointment_id={appointment_id}
-            setAllAppointmets={setAllAppointmets}
+            setAppointments={setAppointments}
             setMessage={setMessage}
           />
         </div>

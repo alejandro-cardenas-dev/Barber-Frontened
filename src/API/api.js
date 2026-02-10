@@ -6,7 +6,7 @@ export const API = {
   CREATE_USER: `${API_BASE_URL}/users/`,
 
   CREATE_APPOINTMENT: `${API_BASE_URL}/appointments/`,
-  DELETE_APPOINTMENT: `${API_BASE_URL}/appointment/`,
+  DELETE_APPOINTMENT: `${API_BASE_URL}/appointments/`,
   GET_APPOINTMENTS: `${API_BASE_URL}/appointments/`,
 
   GET_BARBERS: `${API_BASE_URL}/barbers/`,

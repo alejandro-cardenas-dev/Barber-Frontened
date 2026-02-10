@@ -26,5 +26,5 @@ export function UseAppointments(token) {
 
   }, [token])
 
-  return { appointments, error, loading }
+  return { appointments, setAppointments, error, loading }
 }
