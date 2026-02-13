@@ -1,7 +1,7 @@
-import CreateAppointment from "@/components/appointments/createAppointment";
+import CreateAppointmentContainer from "@/features/appointments/containers/createAppointmentsContainer";
 
-export default function CreateAppointmentView () {
+export default function Page () {
   return (
-    <CreateAppointment />
+    <CreateAppointmentContainer />
   )
 }
