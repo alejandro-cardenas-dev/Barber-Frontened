@@ -1,9 +1,7 @@
-import EditBarberSchedules from "@/components/barbers/editBarberSchedules";
+import EditBarberSchedulesContainer from "@/features/barbers/containers/editBarberSchedulesContainer";
 
-export default function EditBarberSchedulesView () {
+export default function Page () {
   return (
-    <>
-      <EditBarberSchedules />
-    </>
+    <EditBarberSchedulesContainer />
   )
 }
