@@ -1,9 +1,7 @@
-import CreateAccount from "@/components/auth/createAccount";
+import CreateAccountContainer from "@/features/auth/containers/createAccountContainer";
 
-export default function CreateAccountView () {
+export default function Page () {
   return (
-    <>
-      <CreateAccount />
-    </>
+    <CreateAccountContainer />
   )
 }
