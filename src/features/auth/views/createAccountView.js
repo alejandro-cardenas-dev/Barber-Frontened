@@ -1,10 +1,9 @@
 import Toast from "@/components/ui/toast";
-import StringInput from "../components/stringInput";
+import StringInput from "../components/textInput";
 import RadioInput from "../components/radioInput";
 
 export default function CreateAccountView({
   form,
-  user,
   message,
   loading,
   handleChange,
@@ -32,6 +31,7 @@ export default function CreateAccountView({
         <StringInput
           label="First name"
           name="first_name"
+          type="text"
           value={form.first_name}
           onChange={handleChange}
         />
@@ -39,6 +39,7 @@ export default function CreateAccountView({
         <StringInput
           label="Last name"
           name="last_name"
+          type="text"
           value={form.last_name}
           onChange={handleChange}
         />
@@ -46,6 +47,7 @@ export default function CreateAccountView({
         <StringInput
           label="Email"
           name="email"
+          type="email"
           value={form.email}
           onChange={handleChange}
         />
@@ -53,6 +55,7 @@ export default function CreateAccountView({
         <StringInput
           label="Phone"
           name="phone"
+          type="tel"
           value={form.phone}
           onChange={handleChange}
         />
@@ -60,6 +63,7 @@ export default function CreateAccountView({
         <StringInput
           label="Password"
           name="password"
+          type="text"
           value={form.password}
           onChange={handleChange}
         />
@@ -67,6 +71,7 @@ export default function CreateAccountView({
         <StringInput
           label="Confirm password"
           name="password2"
+          type="text"
           value={form.password2}
           onChange={handleChange}
         />
