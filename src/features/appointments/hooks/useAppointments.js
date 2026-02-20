@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import { getAppointments } from "../services/appointments.services";
+import { getAppointments } from "../api/getAppointments";
 
 export function UseAppointments(token) {
   const [appointments, setAppointments] = useState([])

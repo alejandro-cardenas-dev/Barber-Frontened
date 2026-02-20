@@ -1,6 +1,6 @@
 import API from "@/API/api";
 
-export async function deleteAppointmentRequest(token, id) {
+export async function deleteAppointment(token, id) {
   const res = await fetch(`${API.DELETE_APPOINTMENT}${id}/`, {
     method: 'DELETE',
     headers: { Authorization: `Bearer ${token}` }

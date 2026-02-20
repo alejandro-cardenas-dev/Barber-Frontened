@@ -11,11 +11,11 @@ export default function CreateAppointmentContainer() {
   const [showConfirmation, setShowConfirmation] = useState(false)
   const [message, setMessage] = useState('')
 
-  const { createAppointment, loading } = useCreateAppointment()
+  const { handleCreateAppointment, loading } = useCreateAppointment()
 
   const handleConfirm = async () => {
     try {
-      await createAppointment()
+      await handleCreateAppointment()
       setMessage('Appointment successfully created')
     } catch (err) {
       setMessage(err.message)

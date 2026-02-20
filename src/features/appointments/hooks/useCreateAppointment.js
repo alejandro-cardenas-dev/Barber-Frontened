@@ -3,7 +3,7 @@
 import { useAuth } from "@/features/auth/context/authContext";
 import { useCreateAppointmentContext } from "@/context/createAppointmentContext";
 import { useState } from "react";
-import { createAppointmentRequest } from "../services/create.service";
+import { createAppointment } from "../api/createAppointments";
 
 export function useCreateAppointment() {
   const { token } = useAuth()
@@ -17,11 +17,11 @@ export function useCreateAppointment() {
 
   const [loading, setLoading] = useState(false)
 
-  const createAppointment = async () => {
+  const handleCreateAppointment = async () => {
     setLoading(true)
 
     try {
-      await createAppointmentRequest(token, {
+      await createAppointment(token, {
         service: serviceToCreateAppointment.id,
         barber: barberToCreateAppointment.id,
         appointment_date: dateToCreateAppointment,
@@ -34,5 +34,5 @@ export function useCreateAppointment() {
     }
   }
 
-  return { createAppointment, loading }
+  return { handleCreateAppointment, loading }
 }

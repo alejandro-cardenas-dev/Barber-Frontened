@@ -1,7 +1,7 @@
 'use client'
 
 import { useAuth } from "@/features/auth/context/authContext"
-import { deleteAppointmentRequest } from "../services/delete.service"
+import { deleteAppointmentRequest } from "../api/deleteAppointments"
 
 export function useDeleteAppointment(setAppointmentToCancel, setAppointments, setMessage) {
   const { token } = useAuth()

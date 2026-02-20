@@ -1,6 +1,6 @@
 import API from "@/API/api";
 
-export async function createAppointmentRequest(token, payload) {
+export async function createAppointment(token, payload) {
   const res = await fetch(API.CREATE_APPOINTMENT, {
     method: 'POST',
     headers: {
