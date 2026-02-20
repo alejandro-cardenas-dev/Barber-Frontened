@@ -1,12 +1,12 @@
 'use client'
 
-import { useAuthContext } from "@/context/authContext";
+import { useAuth } from "@/features/auth/context/authContext";
 import { useCreateAppointmentContext } from "@/context/createAppointmentContext";
 import { useState } from "react";
 import { createAppointmentRequest } from "../services/create.service";
 
 export function useCreateAppointment() {
-  const { token } = useAuthContext()
+  const { token } = useAuth()
   const {
     barberToCreateAppointment,
     dateToCreateAppointment,

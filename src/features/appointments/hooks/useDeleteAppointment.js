@@ -1,10 +1,10 @@
 'use client'
 
-import { useAuthContext } from "@/context/authContext"
+import { useAuth } from "@/features/auth/context/authContext"
 import { deleteAppointmentRequest } from "../services/delete.service"
 
 export function useDeleteAppointment(setAppointmentToCancel, setAppointments, setMessage) {
-  const { token } = useAuthContext()
+  const { token } = useAuth()
 
   const deleteAppointment = async (id) => {
     try {

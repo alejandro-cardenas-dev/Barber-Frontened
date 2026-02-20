@@ -1,12 +1,12 @@
 'use client'
 
-import { useAuthContext } from "@/context/authContext";
+import { useAuth } from "@/features/auth/context/authContext";
 import AppointmentsView from "../views/appointmentsView";
 import { UseAppointments } from "../hooks/useAppointments";
 import { useState } from "react";
 
 export default function AppointmentContainer() {
-  const { token } = useAuthContext()
+  const { token } = useAuth()
   const { appointments, setAppointments, error, loading } = UseAppointments(token)
   const [appointmentToCancel, setAppointmentToCancel] = useState(null)
   const [message, setMessage] = useState('')

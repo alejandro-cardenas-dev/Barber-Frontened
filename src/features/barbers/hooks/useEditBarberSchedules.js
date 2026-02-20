@@ -1,11 +1,11 @@
 'use client'
 
-import { useAuthContext } from "@/context/authContext";
+import { useAuth } from "@/features/auth/context/authContext";
 import { useState, useEffect  } from "react";
 import { updateBarberSchedule } from "../services/updateSchedules.service";
 
 export function useEditBarberSchedule() {
-  const { token, user, setUser } = useAuthContext()
+  const { token, user, setUser } = useAuth()
 
   const [form, setForm] = useState(null);
   const [message, setMessage] = useState('');

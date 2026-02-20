@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { createUser } from "../services/create.service";
-import { useAuthContext } from "@/context/authContext";
+import { useAuthContext } from "@/features/auth/context/authContext";
 
 export function useCreateAccount() {
   const { user } = useAuthContext()

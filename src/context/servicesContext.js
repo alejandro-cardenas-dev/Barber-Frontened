@@ -2,13 +2,13 @@
 
 import { createContext, useContext, useEffect, useState } from "react"
 import API from "@/API/api"
-import { useAuthContext } from "./authContext"
+import { useAuth } from "../features/auth/context/authContext"
 
 const ServiceContext = createContext(null)
 
 export function ServiceProvider ({ children }) {
   const [servicesData, setServicesData] = useState([])
-  const { token } = useAuthContext()
+  const { token } = useAuth()
 
   useEffect(() => {
     if (!token) return

@@ -1,6 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import ProtectedRoute from "@/components/protectedRout";
-import { AuthProvider } from "@/context/authContext";
+import { AuthProvider } from "@/features/auth/context/authContext";
 import { BarberProvider } from "@/context/barberContext";
 import "./globals.css";
 import { ServiceProvider } from "@/context/servicesContext";

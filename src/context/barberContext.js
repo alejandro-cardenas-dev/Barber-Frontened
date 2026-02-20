@@ -2,13 +2,13 @@
 
 import { createContext, useCallback, useContext, useEffect, useState } from "react"
 import API from "@/API/api"
-import { useAuthContext } from "./authContext"
+import { useAuth } from "../features/auth/context/authContext"
 
 const BarberContext = createContext()
 
 export function BarberProvider ({ children }) {
     const [barbersData, setBarbersData] = useState([])
-    const { token, user } = useAuthContext()
+    const { token, user } = useAuth()
 
     const getBarbers = useCallback(async () => {
       if (!token || !user || !user.is_customer) return

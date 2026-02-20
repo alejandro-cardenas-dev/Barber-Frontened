@@ -1,10 +1,10 @@
 'use client'
 
 import Link from "next/link"
-import { useAuthContext } from "@/context/authContext"
+import { useAuth } from "@/features/auth/context/authContext"
 
 export default function Logout () {
-  const { logout } = useAuthContext()
+  const { logout } = useAuth()
 
   const handleSubmit = () => {
     logout()

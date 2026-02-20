@@ -2,13 +2,13 @@
 
 import { useEffect } from "react"
 import { usePathname, useRouter } from "next/navigation"
-import { useAuthContext } from "@/context/authContext"
+import { useAuth } from "@/features/auth/context/authContext"
 import Loader from "./loader"
 
 const PUBLIC_ROUTES = ['/login', '/create-account']
 
 export default function ProtectedRoute({ children }) {
-  const { token, loading, user } = useAuthContext()
+  const { token, loading, user } = useAuth()
   const pathname = usePathname()
   const router = useRouter()
 

@@ -3,11 +3,11 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useAuthContext } from '@/context/authContext'
+import { useAuth } from '@/features/auth/context/authContext'
 
 export default function Header() {
   const pathname = usePathname()
-  const { user } = useAuthContext()
+  const { user } = useAuth()
 
   const cleanPath = pathname.replace(/\/$/, '')
 

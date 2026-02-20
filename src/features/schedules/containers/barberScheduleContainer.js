@@ -1,6 +1,6 @@
 'use client'
 
-import { useAuthContext } from "@/context/authContext";
+import { useAuth } from "@/features/auth/context/authContext";
 import { useCreateAppointmentContext } from "@/context/createAppointmentContext";
 import { UseBarberSchedules } from "../hooks/useBarberSchedules";
 import BarberScheduleView from "../views/barberScheduleView";
@@ -14,7 +14,7 @@ export default function BarberScheduleContainer() {
     setTimeToCreateAppointment,
   } = useCreateAppointmentContext()
 
-  const { token } = useAuthContext()
+  const { token } = useAuth()
 
   const { schedules, error } = UseBarberSchedules({
     barberId: barberToCreateAppointment?.id,
