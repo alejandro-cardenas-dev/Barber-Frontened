@@ -1,9 +1,7 @@
-import Login from "@/components/auth/login";
+import LoginContainer from "@/features/auth/containers/loginContainer";
 
-export default function LoginView () {
+export default function Page () {
   return (
-    <>
-      <Login />
-    </>
+    <LoginContainer/>
   )
 }
