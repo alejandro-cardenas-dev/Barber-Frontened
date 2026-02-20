@@ -1,13 +1,23 @@
 'use client'
 
-import { useBarberContext } from "@/context/barberContext"
+import { useEffect } from "react"
+import { useBarber } from "@/features/barbers/context/barberContext"
+import { useAuth } from "@/features/auth/context/authContext"
 import BarbersView from "../views/barbersView"
+import Loader from "@/components/loader"
 
 export default function BarbersContainer() {
-  const { barbersData } = useBarberContext()
+  const { token } = useAuth()
+  const { barbersData, getBarbers, loading } = useBarber()
 
-  if (!barbersData || barbersData.length === 0) {
-    return <div className="text-neutral-400 p-6" >No barbers available</div>
+  useEffect(() => {
+    if (!token) return
+    getBarbers(token)
+  }, [token, getBarbers])
+
+  if (loading) return <Loader />
+  if (barbersData.length === 0) {
+    return <div className="text-neutral-400 p-6">No barbers available</div>
   }
 
   return <BarbersView barbers={barbersData} />

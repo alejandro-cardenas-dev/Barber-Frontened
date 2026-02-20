@@ -1,7 +1,7 @@
 'use client'
 
 import Toast from "@/components/ui/toast"
-import { useBarberContext } from "@/context/barberContext"
+import { useBarber } from "@/features/barbers/context/barberContext"
 import { useCreateAppointmentContext } from "@/context/createAppointmentContext"
 import { useServiceContext } from "@/context/servicesContext"
 import CreateServiceSection from "../components/createServiceSection"
@@ -24,7 +24,7 @@ export default function CreateAppointmentView({
 }) {
 
   const { servicesData } = useServiceContext()
-  const { barbersData } = useBarberContext()
+  const { barbersData } = useBarber()
 
   const {
     setBarberToCreateAppointment,
