@@ -1,9 +1,7 @@
-import Logout from "@/components/auth/logout";
+import LogoutContainer from "@/features/auth/containers/logoutContainer";
 
-export default function LogoutView () {
+export default function Page () {
   return (
-    <>
-      <Logout />
-    </>
+    <LogoutContainer />
   )
 }
