@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from "react"
-import { getBarberSchedules } from "../services/schedules.service"
+import { getBarberSchedules } from "../api/getBarberSchedules"
 
 export function UseBarberSchedules({
   barberId,
