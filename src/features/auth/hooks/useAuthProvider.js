@@ -1,7 +1,7 @@
 
 
 import { useState, useEffect } from 'react'
-import { getAccessToken, getBarber, getUser } from '../services/auth.service'
+import { getAccessToken, getBarber, getUser } from '../api/auth'
 
 export function useAuthProvider() {
   const [user, setUser] = useState(null)
