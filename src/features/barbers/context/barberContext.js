@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useCallback, useContext, useState } from "react"
-import { fetchBarbers } from "@/features/barbers/services/barber.service"
+import { fetchBarbers } from "@/features/barbers/api/getBarbers"
 
 const BarberContext = createContext()
 

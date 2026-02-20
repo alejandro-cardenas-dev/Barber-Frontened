@@ -2,7 +2,7 @@
 
 import { useAuth } from "@/features/auth/context/authContext";
 import { useState, useEffect  } from "react";
-import { updateBarberSchedule } from "../services/updateSchedules.service";
+import { updateBarberSchedule } from "../api/updateBarberSchedules";
 
 export function useEditBarberSchedule() {
   const { token, user, setUser } = useAuth()

@@ -1,6 +1,6 @@
 import API from "@/API/api"
 
-export async function fetchBarbers(token) {
+export async function getBarbers(token) {
   const res = await fetch(API.GET_BARBERS, {
     headers: {
       'Content-Type': 'application/json',
