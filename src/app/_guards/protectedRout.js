@@ -3,7 +3,7 @@
 import { useEffect } from "react"
 import { usePathname, useRouter } from "next/navigation"
 import { useAuth } from "@/features/auth/context/authContext"
-import Loader from "./loader"
+import Loader from "@/shared/ui/loader"
 
 const PUBLIC_ROUTES = ['/login', '/create-account']
 

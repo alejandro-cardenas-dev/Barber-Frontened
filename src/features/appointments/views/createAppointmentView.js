@@ -1,6 +1,5 @@
 'use client'
 
-import Toast from "@/components/ui/toast"
 import { useBarber } from "@/features/barbers/context/barberContext"
 import { useCreateAppointmentContext } from "@/context/createAppointmentContext"
 import { useServiceContext } from "@/context/servicesContext"
@@ -8,6 +7,7 @@ import CreateServiceSection from "../components/createServiceSection"
 import CreateBarberSection from "../components/createBarberSection"
 import CreateDateSection from "../components/createDateSection"
 import CreateConfirmation from "../components/createConfirmation"
+import Toast from "@/shared/ui/toast"
 
 export default function CreateAppointmentView({
   serviceModal,

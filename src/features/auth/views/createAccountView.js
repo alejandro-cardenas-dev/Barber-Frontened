@@ -1,4 +1,4 @@
-import Toast from "@/components/ui/toast";
+import Toast from "@/shared/ui/toast";
 import StringInput from "../components/textInput";
 import RadioInput from "../components/radioInput";
 

@@ -4,7 +4,7 @@ import { useEffect } from "react"
 import { useBarber } from "@/features/barbers/context/barberContext"
 import { useAuth } from "@/features/auth/context/authContext"
 import BarbersView from "../views/barbersView"
-import Loader from "@/components/loader"
+import Loader from "@/shared/ui/loader"
 
 export default function BarbersContainer() {
   const { token } = useAuth()

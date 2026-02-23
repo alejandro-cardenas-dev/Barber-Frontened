@@ -1,5 +1,5 @@
 import API from "@/API/api"
-import extractErrorMessage from "@/shared/messageError"
+import extractErrorMessage from "@/shared/utils/messageError"
 
 export async function createUser(formData) {
   const res = await fetch(API.CREATE_USER, {

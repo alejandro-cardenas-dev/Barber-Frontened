@@ -1,7 +1,8 @@
-import Loader from "@/components/loader";
 import AppointmentCard from "../components/appointmentCard";
 import DeleteConfirmation from "../components/deleteConfirmation";
-import Toast from "@/components/ui/toast";
+import Loader from "@/shared/ui/loader";
+import Toast from "@/shared/ui/toast";
+
 
 export default function AppointmentsView({
   appointments,

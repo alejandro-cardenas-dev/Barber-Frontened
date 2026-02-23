@@ -1,6 +1,6 @@
 import Image from "next/image"
 
-import Toast from "@/components/ui/toast"
+import Toast from "@/shared/ui/toast"
 import TimeInput from "../components/forms/timeInput";
 
 export default function EditBarberSchedulesView({
