@@ -1,7 +1,7 @@
 'use client'
 
 import { useAuth } from "@/features/auth/context/authContext";
-import { useCreateAppointmentContext } from "@/context/createAppointmentContext";
+import { useCreateAppointmentContext } from "@/features/appointments/context/createAppointmentContext";
 import { UseBarberSchedules } from "../hooks/useBarberSchedules";
 import BarberScheduleView from "../views/barberScheduleView";
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { useServiceContext } from "@/context/servicesContext"
+import { useServiceContext } from "../context/servicesContext"
 import ServicesView from "../views/servicesView"
 
 export default function ServicesContainer() {

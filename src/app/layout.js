@@ -3,8 +3,8 @@ import ProtectedRoute from "@/app/_guards/protectedRout";
 import { AuthProvider } from "@/features/auth/context/authContext";
 import { BarberProvider } from "@/features/barbers/context/barberContext";
 import "./globals.css";
-import { ServiceProvider } from "@/context/servicesContext";
-import { CreateAppointmentProvider } from "@/context/createAppointmentContext";
+import { ServiceProvider } from "@/features/services/context/servicesContext";
+import { CreateAppointmentProvider } from "@/features/appointments/context/createAppointmentContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

@@ -1,6 +1,6 @@
 'use client'
 
-import { useCreateAppointmentContext } from "@/context/createAppointmentContext";
+import { useCreateAppointmentContext } from "@/features/appointments/context/createAppointmentContext";
 import Image from "next/image";
 import Link from "next/link";
 

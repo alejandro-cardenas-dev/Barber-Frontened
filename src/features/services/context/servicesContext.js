@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react"
 import API from "@/API/api"
-import { useAuth } from "../features/auth/context/authContext"
+import { useAuth } from "@/features/auth/context/authContext"
 
 const ServiceContext = createContext(null)
 

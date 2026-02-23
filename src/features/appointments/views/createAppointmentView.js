@@ -1,8 +1,8 @@
 'use client'
 
 import { useBarber } from "@/features/barbers/context/barberContext"
-import { useCreateAppointmentContext } from "@/context/createAppointmentContext"
-import { useServiceContext } from "@/context/servicesContext"
+import { useCreateAppointmentContext } from "@/features/appointments/context/createAppointmentContext"
+import { useServiceContext } from "@/features/services/context/servicesContext"
 import CreateServiceSection from "../components/createServiceSection"
 import CreateBarberSection from "../components/createBarberSection"
 import CreateDateSection from "../components/createDateSection"
@@ -34,7 +34,6 @@ export default function CreateAppointmentView({
     dateToCreateAppointment,
     timeToCreateAppointment
   } = useCreateAppointmentContext()
-  console.log(serviceToCreateAppointment);
 
   return (
      <div className="max-w-2xl mx-auto p-6 min-h-screen">

@@ -1,7 +1,7 @@
 'use client'
 
 import { useAuth } from "@/features/auth/context/authContext";
-import { useCreateAppointmentContext } from "@/context/createAppointmentContext";
+import { useCreateAppointmentContext } from "@/features/appointments/context/createAppointmentContext";
 import { useState } from "react";
 import { createAppointment } from "../api/createAppointments";
 
