@@ -1,7 +1,7 @@
 import { useDeleteAppointment } from "../hooks/useDeleteAppointment";
 
 export default function DeleteAppointmentButton({ appointmentId, ...stateHandlers }) {
-  const { deleteAppointment } = useDeleteAppointment(
+  const { handleDeleteAppointment } = useDeleteAppointment(
     stateHandlers.setAppointmentToCancel,
     stateHandlers.setAppointments,
     stateHandlers.setMessage
@@ -9,7 +9,7 @@ export default function DeleteAppointmentButton({ appointmentId, ...stateHandler
 
   return (
     <button
-      onClick={() => deleteAppointment(appointmentId)}
+      onClick={() => handleDeleteAppointment(appointmentId)}
       className="
         px-4 py-2 rounded-lg text-sm
         bg-red-600 hover:bg-red-500

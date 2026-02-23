@@ -8,12 +8,12 @@ import Loader from "@/components/loader"
 
 export default function BarbersContainer() {
   const { token } = useAuth()
-  const { barbersData, getBarbers, loading } = useBarber()
+  const { barbersData, handleGetBarbers, loading } = useBarber()
 
   useEffect(() => {
     if (!token) return
-    getBarbers(token)
-  }, [token, getBarbers])
+    handleGetBarbers(token)
+  }, [token, handleGetBarbers])
 
   if (loading) return <Loader />
   if (barbersData.length === 0) {

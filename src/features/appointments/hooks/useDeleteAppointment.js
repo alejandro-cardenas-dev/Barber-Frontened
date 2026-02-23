@@ -1,14 +1,14 @@
 'use client'
 
 import { useAuth } from "@/features/auth/context/authContext"
-import { deleteAppointmentRequest } from "../api/deleteAppointments"
+import { deleteAppointment } from "../api/deleteAppointments"
 
 export function useDeleteAppointment(setAppointmentToCancel, setAppointments, setMessage) {
   const { token } = useAuth()
 
-  const deleteAppointment = async (id) => {
+  const handleDeleteAppointment = async (id) => {
     try {
-      await deleteAppointmentRequest(token, id)
+      await deleteAppointment(token, id)
       setAppointments(prev => prev.filter(appointment => appointment.id != id))
       setMessage('Appointment successfully canceled')
       setAppointmentToCancel(null)
@@ -20,5 +20,5 @@ export function useDeleteAppointment(setAppointmentToCancel, setAppointments, se
     }
   }
 
-  return { deleteAppointment }
+  return { handleDeleteAppointment }
 }

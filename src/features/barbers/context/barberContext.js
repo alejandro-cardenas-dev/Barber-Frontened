@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useCallback, useContext, useState } from "react"
-import { fetchBarbers } from "@/features/barbers/api/getBarbers"
+import { getBarbers } from "../api/getBarbers"
 
 const BarberContext = createContext()
 
@@ -9,12 +9,12 @@ export function BarberProvider ({ children }) {
     const [loading, setLoading] = useState(false)
     const [barbersData, setBarbersData] = useState([])
 
-    const getBarbers = useCallback(async (token) => {
+    const handleGetBarbers = useCallback(async (token) => {
       if (!token) return
       setLoading(true)
 
       try {
-        const data = await fetchBarbers(token)
+        const data = await getBarbers(token)
         setBarbersData(data)
       } finally {
         setLoading(false)
@@ -26,7 +26,7 @@ export function BarberProvider ({ children }) {
     <BarberContext.Provider
       value={{
         barbersData,
-        getBarbers,
+        handleGetBarbers,
         loading,
       }}
     >
