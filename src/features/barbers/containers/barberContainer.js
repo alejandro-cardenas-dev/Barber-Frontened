@@ -1,19 +1,11 @@
 'use client'
 
-import { useEffect } from "react"
 import { useBarber } from "@/features/barbers/context/barberContext"
-import { useAuth } from "@/features/auth/context/authContext"
 import BarbersView from "../views/barbersView"
 import Loader from "@/shared/ui/loader"
 
 export default function BarbersContainer() {
-  const { token } = useAuth()
-  const { barbersData, handleGetBarbers, loading } = useBarber()
-
-  useEffect(() => {
-    if (!token) return
-    handleGetBarbers(token)
-  }, [token, handleGetBarbers])
+  const { barbersData, loading } = useBarber()
 
   if (loading) return <Loader />
   if (barbersData.length === 0) {

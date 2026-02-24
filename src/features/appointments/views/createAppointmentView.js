@@ -1,8 +1,6 @@
 'use client'
 
-import { useBarber } from "@/features/barbers/context/barberContext"
 import { useCreateAppointmentContext } from "@/features/appointments/context/createAppointmentContext"
-import { useServiceContext } from "@/features/services/context/servicesContext"
 import CreateServiceSection from "../components/createServiceSection"
 import CreateBarberSection from "../components/createBarberSection"
 import CreateDateSection from "../components/createDateSection"
@@ -21,10 +19,9 @@ export default function CreateAppointmentView({
   setShowConfirmation,
   onConfirm,
   loading,
+  servicesData,
+  barbersData,
 }) {
-
-  const { servicesData } = useServiceContext()
-  const { barbersData } = useBarber()
 
   const {
     setBarberToCreateAppointment,

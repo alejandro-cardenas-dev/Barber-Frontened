@@ -3,6 +3,8 @@
 import { useState } from "react";
 import CreateAppointmentView from "../views/createAppointmentView";
 import { useCreateAppointment } from "../hooks/useCreateAppointment";
+import { useService } from "@/features/services/context/servicesContext";
+import { useBarber } from "@/features/barbers/context/barberContext";
 
 export default function CreateAppointmentContainer() {
   const [serviceModal, setServiceModal] = useState(false)
@@ -10,6 +12,9 @@ export default function CreateAppointmentContainer() {
   const [dateModal, setDateModal] = useState(false)
   const [showConfirmation, setShowConfirmation] = useState(false)
   const [message, setMessage] = useState('')
+
+  const { servicesData } = useService()
+  const { barbersData } = useBarber()
 
   const { handleCreateAppointment, loading } = useCreateAppointment()
 
@@ -38,6 +43,8 @@ export default function CreateAppointmentContainer() {
       setShowConfirmation={setShowConfirmation}
       onConfirm={handleConfirm}
       loading={loading}
+      barbersData={barbersData}
+      servicesData={servicesData}
     />
   )
 }
