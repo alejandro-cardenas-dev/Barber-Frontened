@@ -70,7 +70,7 @@ export default function CreateAppointmentView({
 
       <button
         onClick={() => setShowConfirmation(true)}
-        disabled={!timeToCreateAppointment}
+        disabled={!timeToCreateAppointment || !serviceToCreateAppointment}
         className="w-full mt-8 bg-white text-black py-4 rounded-2xl font-bold text-lg hover:bg-neutral-600 transition-colors shadow-lg cursor-pointer">
         Confirm Appointment
       </button>
