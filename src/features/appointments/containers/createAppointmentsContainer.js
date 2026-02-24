@@ -5,6 +5,7 @@ import CreateAppointmentView from "../views/createAppointmentView";
 import { useCreateAppointment } from "../hooks/useCreateAppointment";
 import { useService } from "@/features/services/context/servicesContext";
 import { useBarber } from "@/features/barbers/context/barberContext";
+import { useCreateAppointmentContext } from "../context/createAppointmentContext";
 
 export default function CreateAppointmentContainer() {
   const [serviceModal, setServiceModal] = useState(false)
@@ -16,11 +17,13 @@ export default function CreateAppointmentContainer() {
   const { servicesData } = useService()
   const { barbersData } = useBarber()
 
+  const { setRefreshSchedules } = useCreateAppointmentContext()
   const { handleCreateAppointment, loading } = useCreateAppointment()
 
   const handleConfirm = async () => {
     try {
       await handleCreateAppointment()
+      setRefreshSchedules(prev => prev + 1)
       setMessage('Appointment successfully created')
     } catch (err) {
       setMessage(err.message)

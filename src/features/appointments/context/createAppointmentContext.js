@@ -9,6 +9,7 @@ export function CreateAppointmentProvider ({ children }) {
   const [dateToCreateAppointment, setDateToCreateAppointment] = useState('')
   const [timeToCreateAppointment, setTimeToCreateAppointment] = useState('')
   const [serviceToCreateAppointment, setServiceToCreateAppointment] = useState('')
+  const [refreshSchedules, setRefreshSchedules] = useState(0)
 
   return (
     <CreateAppointmentContext.Provider
@@ -16,7 +17,8 @@ export function CreateAppointmentProvider ({ children }) {
         barberToCreateAppointment, setBarberToCreateAppointment,
         dateToCreateAppointment, setDateToCreateAppointment,
         timeToCreateAppointment, setTimeToCreateAppointment,
-        serviceToCreateAppointment, setServiceToCreateAppointment
+        serviceToCreateAppointment, setServiceToCreateAppointment,
+        refreshSchedules, setRefreshSchedules
       }}
     >
       { children }

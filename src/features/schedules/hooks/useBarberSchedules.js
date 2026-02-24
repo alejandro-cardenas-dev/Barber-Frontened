@@ -3,34 +3,32 @@
 import { useEffect, useState } from "react"
 import { getBarberSchedules } from "../api/getBarberSchedules"
 
-export function UseBarberSchedules({
-  barberId,
-  date,
-  token
-}) {
+export function useBarberSchedules({ barberId, date, token, refreshTrigger } = {}) {
   const [schedules, setSchedules] = useState([])
   const [error, setError] = useState('')
 
-  useEffect(() => {
-    async function fetchSchedules() {
-      try {
-        const data = await getBarberSchedules({ barberId, date, token })
+  const handleGetSchedules = async () => {
+    try {
+      const data = await getBarberSchedules({ barberId, date, token })
 
-        if (!data.error) {
-          setSchedules(data.available_times)
-          setError('')
-        } else {
-          setSchedules([])
-          setError(data.error)
-        }
-
-      } catch (error) {
+      if (!data.error) {
+        setSchedules(data.available_times)
+        setError('')
+      } else {
         setSchedules([])
-        setError('Error fetching schedules.')
+        setError(data.error)
       }
+    } catch {
+      setSchedules([])
+      setError('Error fetching schedules.')
     }
-    fetchSchedules()
-  }, [barberId, date, token])
+  }
 
-  return { schedules, error }
+  useEffect(() => {
+    if (barberId && date && token) {
+      handleGetSchedules()
+    }
+  }, [barberId, date, token, refreshTrigger])
+
+  return { schedules, error, refetch: handleGetSchedules }
 }

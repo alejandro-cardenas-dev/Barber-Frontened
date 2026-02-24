@@ -2,7 +2,7 @@
 
 import { useAuth } from "@/features/auth/context/authContext";
 import { useCreateAppointmentContext } from "@/features/appointments/context/createAppointmentContext";
-import { UseBarberSchedules } from "../hooks/useBarberSchedules";
+import { useBarberSchedules } from "../hooks/useBarberSchedules";
 import BarberScheduleView from "../views/barberScheduleView";
 
 export default function BarberScheduleContainer() {
@@ -12,14 +12,16 @@ export default function BarberScheduleContainer() {
     setDateToCreateAppointment,
     timeToCreateAppointment,
     setTimeToCreateAppointment,
+    refreshSchedules,
   } = useCreateAppointmentContext()
 
   const { token } = useAuth()
 
-  const { schedules, error } = UseBarberSchedules({
+  const { schedules, error } = useBarberSchedules({
     barberId: barberToCreateAppointment?.id,
     date: dateToCreateAppointment,
-    token: token
+    token: token,
+    refreshTrigger: refreshSchedules
   })
 
   return (
