@@ -5,6 +5,7 @@ import CreateServiceSection from "../components/createServiceSection"
 import CreateBarberSection from "../components/createBarberSection"
 import CreateDateSection from "../components/createDateSection"
 import CreateConfirmation from "../components/createConfirmation"
+import { FaLessThan } from "react-icons/fa";
 import Toast from "@/shared/ui/toast"
 
 export default function CreateAppointmentView({
@@ -21,6 +22,7 @@ export default function CreateAppointmentView({
   loading,
   servicesData,
   barbersData,
+  onBack
 }) {
 
   const {
@@ -33,11 +35,18 @@ export default function CreateAppointmentView({
   } = useCreateAppointmentContext()
 
   return (
-     <div className="max-w-2xl mx-auto p-6 min-h-screen">
+    <div className="relative max-w-2xl mx-auto p-6 min-h-screen">
 
       {message && (
-        <Toast type={`${message.includes('successfully') ? 'success' : 'error' }`} message={message} />
+        <Toast type="error" message={message} />
       )}
+
+      <button
+        onClick={onBack}
+        className="fixed top-6 left-6 flex items-center gap-2 font-bold text-xl px-4 py-2 rounded-xl cursor-pointer"
+      >
+        <FaLessThan /> Back
+      </button>
 
       <header className="mb-8 text-center">
         <h2 className="text-3xl font-extrabold">Book Appointment</h2>
