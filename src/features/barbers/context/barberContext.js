@@ -6,27 +6,27 @@ import { useAuth } from "@/features/auth/context/authContext"
 
 const BarberContext = createContext()
 
-export function BarberProvider ({ children }) {
+export function BarberProvider({ children }) {
   const { token } = useAuth()
   const [loading, setLoading] = useState(false)
   const [barbersData, setBarbersData] = useState([])
+  const [error, setError] = useState(null)
 
   const handleGetBarbers = useCallback(async () => {
-    if (!token) return
     setLoading(true)
-
+    setError(null)
     try {
       const data = await getBarbers(token)
       setBarbersData(data)
+    } catch (err) {
+      setError(err.message)
     } finally {
       setLoading(false)
     }
   }, [token])
 
   useEffect(() => {
-    if (token) {
-      handleGetBarbers()
-    }
+    handleGetBarbers()
   }, [token, handleGetBarbers])
 
   return (
@@ -34,9 +34,11 @@ export function BarberProvider ({ children }) {
       value={{
         barbersData,
         loading,
+        error,
+        handleGetBarbers,
       }}
     >
-      { children }
+      {children}
     </BarberContext.Provider>
   )
 }

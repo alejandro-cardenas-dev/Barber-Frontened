@@ -1,72 +1,57 @@
-import Image from "next/image";
-import { FaPhone } from "react-icons/fa6";
-import { MdEmail } from "react-icons/md";
+import Image from "next/image"
+import { FaPhone } from "react-icons/fa6"
+import { MdEmail } from "react-icons/md"
 
 export default function BarberCard({ barber }) {
   return (
-    <div
-      className="
-        flex flex-col md:flex-row items-center
-        bg-neutral-900
-        "
-    >
-      <div className="relative w-full md:w-[280px] h-[260px]">
+    <div className="
+      flex flex-col md:flex-row items-stretch
+      bg-neutral-950 border border-neutral-800/60
+      rounded-4xl overflow-hidden transition-all duration-500 group
+      hover:border-neutral-600 hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.7)]
+    ">
+      <div className="relative w-full md:w-60 h-[300px] md:h-auto overflow-hidden">
         <Image
           src="/barber3.png"
-          alt="Barber photo"
+          alt={`${barber.user.first_name} photo`}
           fill
-          className="
-          object-cover
-          transition-all duration-500
-          "
+          className="object-cover"
         />
-
+        <div className="absolute inset-0 bg-linear-to-t from-black via-black/20 to-transparent opacity-60" />
       </div>
 
-      <div className="flex-1 px-8 py-8 flex flex-col gap-6">
+      <div className="flex-1 p-8 sm:p-10 flex flex-col justify-between">
         <div>
-          <p className="text-xs uppercase tracking-widest text-neutral-500">
-            Barber
-          </p>
-          <h2 className="text-3xl font-extrabold text-white leading-tight">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="w-8 h-px bg-neutral-700"></span>
+            <p className="text-[10px] uppercase tracking-[0.4em] text-neutral-500 font-bold">
+              Master Barber
+            </p>
+          </div>
+
+          <h2 className="text-4xl font-black text-white leading-[0.9] tracking-tighter uppercase mb-6">
             {barber.user.first_name}
             <br />
-            {barber.user.last_name}
+            <span className="text-neutral-700">{barber.user.last_name}</span>
           </h2>
-        </div>
 
-        <div className="flex flex-col gap-4 text-neutral-400">
-          <div className="flex items-center gap-3">
-            <FaPhone className="text-neutral-500" />
-            <span className="text-sm">
-              {barber.user.phone}
-            </span>
+          <div className="space-y-3">
+            <div className="flex items-center gap-4 group/item">
+              <div className="w-8 h-8 rounded-full bg-neutral-900 flex items-center justify-center border border-neutral-800 group-hover/item:border-neutral-500 transition-colors">
+                <FaPhone className="text-neutral-500 text-xs group-hover/item:text-white" />
+              </div>
+              <span className="text-sm font-light text-neutral-400 tracking-wide">{barber.user.phone}</span>
+            </div>
+
+            <div className="flex items-center gap-4 group/item">
+              <div className="w-8 h-8 rounded-full bg-neutral-900 flex items-center justify-center border border-neutral-800 group-hover/item:border-neutral-500 transition-colors">
+                <MdEmail className="text-neutral-500 text-xs group-hover/item:text-white" />
+              </div>
+              <span className="text-sm font-light text-neutral-400 tracking-wide truncate">{barber.user.email}</span>
+            </div>
           </div>
-
-          <div className="flex items-center gap-3">
-            <MdEmail className="text-neutral-500" />
-            <span className="text-sm">
-              {barber.user.email}
-            </span>
-          </div>
         </div>
-
-        {/* <button
-          className="
-            mt-4 w-fit
-            px-6 py-3
-            bg-neutral-200
-            text-black
-            font-semibold
-            tracking-wide
-            hover:bg-white
-            transition-colors
-          "
-        >
-          SELECT BARBER
-        </button> */}
       </div>
-
     </div>
   )
 }

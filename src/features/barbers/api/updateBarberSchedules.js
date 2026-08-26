@@ -1,28 +1,20 @@
 import API from "@/API/api";
 
 export async function updateBarberSchedule(token, form) {
-  const formData = new FormData()
-
-  const map = {
-    workStart: "work_start_time",
-    workEnd: "work_end_time",
-    lunchStart: "lunch_start_time",
-    lunchEnd: "lunch_end_time",
-  }
-
-  Object.entries(form).forEach(([key, value]) => {
-    if (value) formData.append(map[key], value)
-  })
-
   const res = await fetch(API.EDIT_BARBER_SCHEDULE, {
-    method: "PUT",
+    method: 'PATCH',
     headers: {
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
-    body: formData,
+    body: JSON.stringify({
+      work_start_time: form.workStart,
+      work_end_time: form.workEnd,
+      lunch_start_time: form.lunchStart,
+      lunch_end_time: form.lunchEnd,
+    }),
   })
 
   if (!res.ok) throw new Error('Failed to update schedule')
-
   return res.json()
 }

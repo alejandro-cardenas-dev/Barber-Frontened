@@ -1,15 +1,14 @@
 'use client'
 
-import { useAuth } from "@/features/auth/context/authContext";
-import { useState, useEffect  } from "react";
-import { updateBarberSchedule } from "../api/updateBarberSchedules";
+import { useAuth } from "@/features/auth/context/authContext"
+import { useState, useEffect } from "react"
+import { updateBarberSchedule } from "../api/updateBarberSchedules"
 
 export function useEditBarberSchedule() {
   const { token, user, setUser } = useAuth()
-
-  const [form, setForm] = useState(null);
-  const [message, setMessage] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState(null)
+  const [message, setMessage] = useState('')
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     if (user) {
@@ -23,21 +22,20 @@ export function useEditBarberSchedule() {
   }, [user])
 
   const handleChange = (field) => (e) => {
-    setForm((prev) => ({...prev, [field]: e.target.value}))
+    setForm(prev => ({ ...prev, [field]: e.target.value }))
   }
 
   const reset = () => {
     setForm({
-      workStart: "10:00",
-      workEnd: "16:00",
-      lunchStart: "12:00",
-      lunchEnd: "14:00",
+      workStart: '10:00',
+      workEnd: '16:00',
+      lunchStart: '12:00',
+      lunchEnd: '14:00',
     })
   }
 
   const unchanged = () => {
     if (!user || !form) return true
-
     return (
       form.workStart === user.work_start_time &&
       form.workEnd === user.work_end_time &&
@@ -55,13 +53,13 @@ export function useEditBarberSchedule() {
       return
     }
 
+    setLoading(true)
     try {
       const data = await updateBarberSchedule(token, form)
-      setUser(data)
-      setMessage('chedules edited successfully')
-
+      setUser(prev => ({ ...prev, ...data })) // merge — preserva todos los campos del user
+      setMessage('Schedules edited successfully')
     } catch {
-      setMessage('An error has ocurred. Please try againnnnnnnnnnn!')
+      setMessage('An error occurred. Please try again.')
     } finally {
       setLoading(false)
       setTimeout(() => setMessage(''), 3000)

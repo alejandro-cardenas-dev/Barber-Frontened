@@ -4,11 +4,9 @@ export async function getBarbers(token) {
   const res = await fetch(API.GET_BARBERS, {
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
+      ...(token && { Authorization: `Bearer ${token}` }),
     }
   })
-
   if (!res.ok) throw new Error("Failed to fetch barbers")
-
   return res.json()
 }
