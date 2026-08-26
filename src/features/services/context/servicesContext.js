@@ -10,23 +10,23 @@ export function ServiceProvider({ children }) {
   const { token } = useAuth()
   const [loading, setLoading] = useState(false)
   const [servicesData, setServicesData] = useState([])
+  const [error, setError] = useState(null)
 
   const handleGetServices = useCallback(async () => {
-    if (!token) return
     setLoading(true)
-
+    setError(null)
     try {
       const data = await getServices(token)
       setServicesData(data)
+    } catch (err) {
+      setError(err.message)
     } finally {
       setLoading(false)
     }
   }, [token])
 
   useEffect(() => {
-    if (token) {
-      handleGetServices()
-    }
+    handleGetServices()
   }, [token, handleGetServices])
 
   return (
@@ -34,6 +34,8 @@ export function ServiceProvider({ children }) {
       value={{
         servicesData,
         loading,
+        error,
+        handleGetServices,
       }}
     >
       {children}
