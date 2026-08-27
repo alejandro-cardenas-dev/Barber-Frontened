@@ -10,6 +10,7 @@ export const API = {
   GET_APPOINTMENTS: `${API_BASE_URL}/appointments/`,
 
   GET_BARBERS: `${API_BASE_URL}/barbers/`,
+  CREATE_BARBER: `${API_BASE_URL}/barbers/`,
   GET_BARBERS_AVAILABLE_TIMES_SPECIFIC_DATE: `${API_BASE_URL}/barbers/`,
   EDIT_BARBER_SCHEDULE: `${API_BASE_URL}/barbers/me/schedule/`,
 
