@@ -21,7 +21,7 @@ export default function CreateServiceSection({
         <span className="text-indigo-600 font-medium">{serviceModal ? 'Close' : 'Change'}</span>
       </div>
 
-      {serviceModal && (
+      {(serviceModal || serviceToCreateAppointment) && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4 animate-in fade-in slide-in-from-top-2">
           {servicesData.map((service) => (
             <div
@@ -31,7 +31,7 @@ export default function CreateServiceSection({
                 transition-colors cursor-pointer group
                 hover:bg-neutral-950 hover:border-indigo-500
                 ${
-                  serviceToCreateAppointment.id === service.id
+                  serviceToCreateAppointment?.id === service.id
                     ? 'border-indigo-500 text-indigo-500'
                     : 'border-neutral-700'
                 }

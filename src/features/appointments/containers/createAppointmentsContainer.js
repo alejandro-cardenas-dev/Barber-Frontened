@@ -1,13 +1,13 @@
 'use client'
 
-import { useState } from "react";
-import CreateAppointmentView from "../views/createAppointmentView";
-import { useCreateAppointment } from "../hooks/useCreateAppointment";
-import { useService } from "@/features/services/context/servicesContext";
-import { useBarber } from "@/features/barbers/context/barberContext";
-import { useCreateAppointmentContext } from "../context/createAppointmentContext";
-import AppointmentSuccessOverlay from "../components/appointmentSuccessOverlay";
-import { useRouter } from "next/navigation";
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import CreateAppointmentView from "../views/createAppointmentView"
+import { useCreateAppointment } from "../hooks/useCreateAppointment"
+import { useService } from "@/features/services/context/servicesContext"
+import { useBarber } from "@/features/barbers/context/barberContext"
+import { useCreateAppointmentContext } from "../context/createAppointmentContext"
+import AppointmentSuccessOverlay from "../components/appointmentSuccessOverlay"
 
 export default function CreateAppointmentContainer() {
   const [serviceModal, setServiceModal] = useState(false)
@@ -20,9 +20,17 @@ export default function CreateAppointmentContainer() {
   const { servicesData } = useService()
   const { barbersData } = useBarber()
 
-  const { setRefreshSchedules } = useCreateAppointmentContext()
-  const { handleCreateAppointment, loading } = useCreateAppointment()
+  const {
+    barberToCreateAppointment,
+    setBarberToCreateAppointment,
+    serviceToCreateAppointment,
+    setServiceToCreateAppointment,
+    dateToCreateAppointment,
+    timeToCreateAppointment,
+    setRefreshSchedules,
+  } = useCreateAppointmentContext()
 
+  const { handleCreateAppointment, loading } = useCreateAppointment()
   const router = useRouter()
 
   const handleConfirm = async () => {
@@ -32,14 +40,10 @@ export default function CreateAppointmentContainer() {
       setAppointmentCreated(true)
     } catch (err) {
       setMessage(err.message)
+      setTimeout(() => setMessage(''), 3000)
     } finally {
       setShowConfirmation(false)
-      setTimeout(() => setMessage(''), 3000)
     }
-  }
-
-  const handleBack = () => {
-    router.back()
   }
 
   return (
@@ -53,14 +57,20 @@ export default function CreateAppointmentContainer() {
         setBarberModal={setBarberModal}
         dateModal={dateModal}
         setDateModal={setDateModal}
-        message={message}
         showConfirmation={showConfirmation}
         setShowConfirmation={setShowConfirmation}
         onConfirm={handleConfirm}
         loading={loading}
-        barbersData={barbersData}
         servicesData={servicesData}
-        onBack={handleBack}
+        barbersData={barbersData}
+        barberToCreateAppointment={barberToCreateAppointment}
+        setBarberToCreateAppointment={setBarberToCreateAppointment}
+        serviceToCreateAppointment={serviceToCreateAppointment}
+        setServiceToCreateAppointment={setServiceToCreateAppointment}
+        dateToCreateAppointment={dateToCreateAppointment}
+        timeToCreateAppointment={timeToCreateAppointment}
+        message={message}
+        onBack={() => router.back()}
       />
     </>
   )

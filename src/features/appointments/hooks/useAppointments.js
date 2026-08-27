@@ -1,30 +1,45 @@
 'use client'
 
-import { useEffect, useState } from "react";
-import { getAppointments } from "../api/getAppointments";
+import { useEffect, useState } from "react"
+import { useAuth } from "@/features/auth/context/authContext"
+import { getAppointments } from "../api/getAppointments"
 
-export function UseAppointments(token) {
+export function useAppointments() {
+  const { token } = useAuth()
   const [appointments, setAppointments] = useState([])
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [appointmentToCancel, setAppointmentToCancel] = useState(null)
+  const [message, setMessage] = useState('')
 
   useEffect(() => {
-    async function fetchAppointments() {
+    if (!token) return
+
+    const fetchAppointments = async () => {
       setLoading(true)
       try {
         const data = await getAppointments(token)
         setAppointments(data)
         setError('')
-        setLoading(false)
-      } catch (error) {
+      } catch (err) {
         setAppointments([])
-        setError(error || 'Network error')
+        setError(err.message || 'Network error')
+      } finally {
         setLoading(false)
       }
     }
-    fetchAppointments()
 
+    fetchAppointments()
   }, [token])
 
-  return { appointments, setAppointments, error, loading }
+  return {
+    appointments,
+    setAppointments,
+    error,
+    loading,
+    appointmentToCancel,
+    setAppointmentToCancel,
+    message,
+    setMessage,
+  }
 }

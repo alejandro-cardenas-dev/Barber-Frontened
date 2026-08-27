@@ -1,62 +1,76 @@
-export default function AppointmentCard({ appointment, setAppointmentToCancel }) {
+export default function AppointmentCard({ appointment, setAppointmentToCancel, isBarber }) {
+  const canCancel = !isBarber && !appointment.is_completed && appointment.status !== 'cancelled'
+  const showStatus = appointment.is_completed || isBarber || appointment.status == 'cancelled'
+
+  const customerName = `${appointment.customer.user.first_name} ${appointment.customer.user.last_name}`
+  const barberName = `${appointment.barber.user.first_name} ${appointment.barber.user.last_name}`
+
   return (
     <div
       className="
-        w-full max-w-sm rounded-3xl bg-neutral-900/95
-        shadow-[0_10px_40px_rgba(0,0,0,0.35)]
-        border border-neutral-800/60 backdrop-blur-xl
-        transition-all duration-300
-        hover:shadow-[0_15px_50px_rgba(0,0,0,0.45)]
-        hover:-translate-y-1.5
+        w-full rounded-3xl bg-neutral-950
+        shadow-[0_15px_35px_rgba(0,0,0,0.4)]
+        border border-neutral-800/50 overflow-hidden
+        transition-all duration-300 group
+        hover:border-neutral-700
       "
     >
 
-      <div className="px-6 py-4 border-b border-neutral-800/40">
-        <p className="text-white font-semibold text-lg tracking-tight">
-          {appointment.appointment_date}
-        </p>
+      <div className="px-6 pt-6 pb-3 flex justify-between items-start">
+        <div>
+          <span className="text-neutral-500 uppercase tracking-[0.2em] text-[10px] font-bold block mb-0.5">
+            Date
+          </span>
+          <p className="text-white font-medium text-base tracking-tight">
+            {appointment.appointment_date}
+          </p>
+        </div>
+        {showStatus && (
+          <div className={`flex px-2 py-0.5 rounded-full border ${appointment.status === 'confirmed' ? 'border-green-900/50 bg-green-950/20' : 'border-neutral-800 bg-neutral-900/50'}`}>
+            <span className={`text-[9px] uppercase tracking-widest font-bold ${appointment.status === 'confirmed' ? 'text-green-500' : 'text-red-500'}`}>
+              { appointment.status }
+            </span>
+          </div>
+        )}
       </div>
 
-      <div className="px-6 py-6 flex flex-col gap-7">
-
-        <div className="bg-black rounded-2xl py-5 shadow-inner shadow-black/40 flex items-center justify-center">
-          <span className="text-white text-4xl font-semibold tracking-tight">
-            {appointment.appointment_start_time.slice(0, 5)}
-          </span>
+      <div className="px-6 pb-6 flex flex-col gap-4">
+        <div className="flex items-center gap-4 bg-neutral-900/30 border border-neutral-900 rounded-xl p-3">
+          <div className="flex flex-col items-center border-r border-neutral-800 pr-4">
+             <span className="text-neutral-500 text-[10px] uppercase tracking-tighter">Time</span>
+             <span className="text-white text-2xl font-black tracking-tighter">
+                {appointment.appointment_start_time.slice(0, 5)}
+             </span>
+          </div>
+          <div className="min-w-0">
+            <span className="text-neutral-500 text-[10px] uppercase tracking-widest block">Customer</span>
+            <p className="text-white text-sm font-bold truncate tracking-tight uppercase">
+              {customerName}
+            </p>
+          </div>
         </div>
 
-        <div className="bg-neutral-100 rounded-2xl px-5 py-4 shadow-sm shadow-black/10">
-          <p className="text-neutral-900 text-[17px] font-semibold">
-            {appointment.customer.user.first_name} {appointment.customer.user.last_name}
-          </p>
-          <p className="text-neutral-600 mt-1 text-sm font-medium">
-            Barber: {appointment.barber.user.first_name} {appointment.barber.user.last_name}
-          </p>
+        <div className="flex justify-between items-center px-1">
+          <div>
+            <span className="text-neutral-600 text-[10px] uppercase tracking-widest block">Barber</span>
+            <p className="text-neutral-400 text-xs font-light">{barberName}</p>
+          </div>
         </div>
 
-        <div className="flex flex-col items-center gap-4 mt-4">
-          <span className="text-neutral-500 text-xs tracking-wide">
-            © 2025 Alejo’s Barber
-          </span>
-
-          <span
+        {canCancel && (
+          <button
             onClick={() => setAppointmentToCancel(appointment.id)}
             className="
-              text-[13px] font-medium
-              px-5 py-2 rounded-xl
-              border border-neutral-700/50
-              text-neutral-200
-              hover:text-white
-              bg-neutral-900/60
-              hover:bg-neutral-800
-              transition-all duration-300
-              shadow-[0_2px_8px_rgba(0,0,0,0.25)]
-              cursor-pointer
+              w-full py-2 rounded-lg
+              text-[10px] font-bold uppercase tracking-[0.15em]
+              border border-neutral-800 text-neutral-500
+              hover:bg-neutral-100 hover:text-black hover:border-white
+              transition-all duration-300 mt-2
             "
           >
-            Cancel Appointment
-          </span>
-        </div>
+            Cancell Appointment
+          </button>
+        )}
       </div>
     </div>
   )

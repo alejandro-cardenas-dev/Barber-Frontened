@@ -1,45 +1,39 @@
 'use client'
 
-import { useCreateAppointmentContext } from "@/features/appointments/context/createAppointmentContext"
 import CreateServiceSection from "../components/createServiceSection"
 import CreateBarberSection from "../components/createBarberSection"
 import CreateDateSection from "../components/createDateSection"
 import CreateConfirmation from "../components/createConfirmation"
-import { FaLessThan } from "react-icons/fa";
+import { FaLessThan } from "react-icons/fa"
 import Toast from "@/shared/ui/toast"
 
 export default function CreateAppointmentView({
-  serviceModal,
-  setServiceModal,
-  barberModal,
-  setBarberModal,
-  dateModal,
-  setDateModal,
-  message,
-  showConfirmation,
-  setShowConfirmation,
+  // modal states
+  serviceModal, setServiceModal,
+  barberModal, setBarberModal,
+  dateModal, setDateModal,
+  // confirmation
+  showConfirmation, setShowConfirmation,
   onConfirm,
   loading,
+  // data
   servicesData,
   barbersData,
-  onBack
+  // appointment context values — passed from container
+  barberToCreateAppointment,
+  setBarberToCreateAppointment,
+  serviceToCreateAppointment,
+  setServiceToCreateAppointment,
+  dateToCreateAppointment,
+  timeToCreateAppointment,
+  // misc
+  message,
+  onBack,
 }) {
-
-  const {
-    setBarberToCreateAppointment,
-    barberToCreateAppointment,
-    serviceToCreateAppointment,
-    setServiceToCreateAppointment,
-    dateToCreateAppointment,
-    timeToCreateAppointment
-  } = useCreateAppointmentContext()
-
   return (
     <div className="relative max-w-2xl mx-auto p-6 min-h-screen">
 
-      {message && (
-        <Toast type="error" message={message} />
-      )}
+      {message && <Toast type="error" message={message} />}
 
       <button
         onClick={onBack}
@@ -66,38 +60,36 @@ export default function CreateAppointmentView({
           barbersData={barbersData}
           barberModal={barberModal}
           setBarberModal={setBarberModal}
-          setBarberToCreateAppointment={setBarberToCreateAppointment}
           barberToCreateAppointment={barberToCreateAppointment}
+          setBarberToCreateAppointment={setBarberToCreateAppointment}
         />
 
         <CreateDateSection
           dateModal={dateModal}
           setDateModal={setDateModal}
-          timeToCreateAppointment={timeToCreateAppointment}
         />
       </div>
 
       <button
         onClick={() => setShowConfirmation(true)}
         disabled={!timeToCreateAppointment || !serviceToCreateAppointment}
-        className="w-full mt-8 bg-white text-black py-4 rounded-2xl font-bold text-lg hover:bg-neutral-600 transition-colors shadow-lg cursor-pointer">
+        className="w-full mt-8 bg-white text-black py-4 rounded-2xl font-bold text-lg hover:bg-neutral-600 transition-colors shadow-lg cursor-pointer"
+      >
         Confirm Appointment
       </button>
 
-      {
-        showConfirmation && (
-          <CreateConfirmation
-            onConfirm={onConfirm}
-            setShowConfirmation={setShowConfirmation}
-            barber_first_name={barberToCreateAppointment.user.first_name}
-            barber_last_name={barberToCreateAppointment.user.last_name}
-            service={serviceToCreateAppointment.name}
-            date={dateToCreateAppointment}
-            time={timeToCreateAppointment}
-            loading={loading}
-          />
-        )
-      }
+      {showConfirmation && (
+        <CreateConfirmation
+          onConfirm={onConfirm}
+          setShowConfirmation={setShowConfirmation}
+          barber_first_name={barberToCreateAppointment?.user?.first_name}
+          barber_last_name={barberToCreateAppointment?.user?.last_name}
+          service={serviceToCreateAppointment?.name}
+          date={dateToCreateAppointment}
+          time={timeToCreateAppointment}
+          loading={loading}
+        />
+      )}
     </div>
   )
 }

@@ -4,11 +4,11 @@ import { createContext, useContext, useState } from "react"
 
 const CreateAppointmentContext = createContext(null)
 
-export function CreateAppointmentProvider ({ children }) {
-  const [barberToCreateAppointment, setBarberToCreateAppointment] = useState('')
+export function CreateAppointmentProvider({ children }) {
+  const [barberToCreateAppointment, setBarberToCreateAppointment] = useState(null)
   const [dateToCreateAppointment, setDateToCreateAppointment] = useState('')
-  const [timeToCreateAppointment, setTimeToCreateAppointment] = useState('')
-  const [serviceToCreateAppointment, setServiceToCreateAppointment] = useState('')
+  const [timeToCreateAppointment, setTimeToCreateAppointment] = useState(null)
+  const [serviceToCreateAppointment, setServiceToCreateAppointment] = useState(null)
   const [refreshSchedules, setRefreshSchedules] = useState(0)
 
   return (
@@ -18,14 +18,14 @@ export function CreateAppointmentProvider ({ children }) {
         dateToCreateAppointment, setDateToCreateAppointment,
         timeToCreateAppointment, setTimeToCreateAppointment,
         serviceToCreateAppointment, setServiceToCreateAppointment,
-        refreshSchedules, setRefreshSchedules
+        refreshSchedules, setRefreshSchedules,
       }}
     >
-      { children }
+      {children}
     </CreateAppointmentContext.Provider>
   )
 }
 
-export function useCreateAppointmentContext () {
+export function useCreateAppointmentContext() {
   return useContext(CreateAppointmentContext)
 }

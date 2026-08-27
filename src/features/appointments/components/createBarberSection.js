@@ -32,7 +32,7 @@ export default function CreateBarberSection({
                   flex flex-col items-center p-4 rounded-2xl
                   border-2 hover:border-emerald-500
                   hover:bg-neutral-950 transition-all cursor-pointer
-                  ${barberToCreateAppointment.id == barber.id
+                  ${barberToCreateAppointment?.id == barber.id
                     ? 'border-emerald-500'
                     : 'border-transparent'
                   }
