@@ -1,9 +1,12 @@
 export default function AppointmentCard({ appointment, setAppointmentToCancel, isBarber }) {
-  const canCancel = !isBarber && !appointment.is_completed && appointment.status !== 'cancelled'
-  const showStatus = appointment.is_completed || isBarber || appointment.status == 'cancelled'
-
+  const canCancel = !isBarber && appointment.status == 'confirmed'
   const customerName = `${appointment.customer.user.first_name} ${appointment.customer.user.last_name}`
   const barberName = `${appointment.barber.user.first_name} ${appointment.barber.user.last_name}`
+  const appointmentStatusColor = {
+    'confirmed': 'text-neutral-500',
+    'cancelled': 'text-red-500',
+    'completed': 'text-green-500',
+  }
 
   return (
     <div
@@ -25,13 +28,12 @@ export default function AppointmentCard({ appointment, setAppointmentToCancel, i
             {appointment.appointment_date}
           </p>
         </div>
-        {showStatus && (
-          <div className={`flex px-2 py-0.5 rounded-full border ${appointment.status === 'confirmed' ? 'border-green-900/50 bg-green-950/20' : 'border-neutral-800 bg-neutral-900/50'}`}>
-            <span className={`text-[9px] uppercase tracking-widest font-bold ${appointment.status === 'confirmed' ? 'text-green-500' : 'text-red-500'}`}>
-              { appointment.status }
-            </span>
-          </div>
-        )}
+
+        <div className={`flex px-2 py-0.5 rounded-full border ${appointment.status === 'completed' ? 'border-green-900/50 bg-green-950/20' : 'border-neutral-800 bg-neutral-900/50'}`}>
+          <span className={`text-[9px] uppercase tracking-widest font-bold ${ appointmentStatusColor[appointment.status] }`}>
+            { appointment.status }
+          </span>
+        </div>
       </div>
 
       <div className="px-6 pb-6 flex flex-col gap-4">
